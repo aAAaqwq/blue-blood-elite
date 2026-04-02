@@ -3,230 +3,916 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<title>蓝血菁英 — AI超级个体精英社区</title>
+<title>蓝血菁英 — Blue Blood Elite</title>
 <style>
+/* ===== CSS Reset & Variables ===== */
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#070B14;--bg3:#131B2E;--bg4:#192338;--bd:rgba(56,120,220,.12);--bdh:rgba(56,120,220,.3);--t:#E8EDF5;--t2:#8899B4;--t3:#506080;--t4:#3A4C68;--bl:#1890FF;--bld:rgba(24,144,255,.12);--cy:#00D4AA;--cyd:rgba(0,212,170,.1);--gd:linear-gradient(135deg,#1890FF,#00D4AA);--go:#F5A623;--god:rgba(245,166,35,.12);--rd:#FF4D6A;--rdd:rgba(255,77,106,.1);--rl:16px;--rf:9999px;--f:'PingFang SC',-apple-system,sans-serif}
-body{font-family:var(--f);background:var(--bg);color:var(--t);font-size:13px;line-height:1.5;overflow:hidden;height:100vh;height:100dvh;-webkit-text-size-adjust:100%}
+:root{
+  /* Core Palette */
+  --bg:#06080F;
+  --bg2:#0C1020;
+  --bg3:#111827;
+  --bg4:#1A2236;
+  --bg5:#222D44;
+  /* Borders */
+  --bd:rgba(30,58,138,.15);
+  --bdh:rgba(59,130,246,.25);
+  --bdg:rgba(212,168,67,.2);
+  /* Text */
+  --t:#F0F4FF;
+  --t2:#94A3C8;
+  --t3:#5B6B8A;
+  --t4:#3D4F6F;
+  /* Accent Colors */
+  --bl:#3B82F6;
+  --bll:#60A5FA;
+  --bld:rgba(59,130,246,.12);
+  --cy:#06D6A0;
+  --cyd:rgba(6,214,160,.1);
+  --gd:#D4A843;
+  --gdd:rgba(212,168,67,.1);
+  --gdl:linear-gradient(135deg,#D4A843,#F0D78C);
+  --pu:#8B5CF6;
+  --pud:rgba(139,92,246,.12);
+  --rd:#EF4444;
+  --rdd:rgba(239,68,68,.1);
+  /* Gradients */
+  --gb:linear-gradient(135deg,#1E3A8A,#3B82F6);
+  --gc:linear-gradient(135deg,#059669,#06D6A0);
+  --gg:linear-gradient(135deg,#B8860B,#D4A843,#F0D78C);
+  --gp:linear-gradient(135deg,#6D28D9,#8B5CF6);
+  /* Radius */
+  --rl:14px;
+  --rm:10px;
+  --rf:9999px;
+  /* Font */
+  --f:-apple-system,'SF Pro Display','PingFang SC','Helvetica Neue',sans-serif;
+}
+html,body{height:100%;overflow:hidden}
+body{font-family:var(--f);background:var(--bg);color:var(--t);font-size:13px;line-height:1.6;-webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased}
 a{color:var(--bl);text-decoration:none}
-::-webkit-scrollbar{width:0}
-.app{max-width:430px;margin:0 auto;height:100vh;height:100dvh;position:relative;overflow:hidden}
-#M{overflow-y:auto;height:calc(100vh - 72px);height:calc(100dvh - 72px);padding:0 16px 24px;-webkit-overflow-scrolling:touch}
-.P{display:none}.P.on{display:block}
-/* Tab */
-.T{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;height:auto;display:flex;background:rgba(7,11,20,.98);border-top:1px solid var(--bd);z-index:999;padding:8px 0 max(8px,env(safe-area-inset-bottom))}
-.T>div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--t4);font-size:10px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent;padding:4px 0}
-.T>div.a{color:var(--bl)}
-.T>div>span:first-child{font-size:22px}
+::-webkit-scrollbar{width:0;display:none}
+button{font-family:var(--f)}
+
+/* ===== App Shell ===== */
+.app{max-width:430px;margin:0 auto;height:100vh;height:100dvh;position:relative;overflow:hidden;background:var(--bg)}
+#M{overflow-y:auto;height:calc(100vh - 64px);height:calc(100dvh - 64px);-webkit-overflow-scrolling:touch;scroll-behavior:smooth}
+.P{display:none;padding:0 16px 24px}.P.on{display:block}
+
+/* ===== Tab Bar ===== */
+.T{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;display:flex;background:rgba(6,8,15,.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--bd);z-index:100;padding:6px 0 max(6px,env(safe-area-inset-bottom))}
+.T>div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:var(--t4);font-size:10px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent;padding:4px 0;transition:color .2s}
+.T>div.a{color:var(--gd)}
+.T>div .ti{font-size:21px;line-height:1;transition:transform .2s}
+.T>div.a .ti{transform:scale(1.1)}
+.T>div .tl{font-size:10px;letter-spacing:.5px}
+
+/* ===== Common Components ===== */
 /* Card */
-.C{background:var(--bg3);border:1px solid var(--bd);border-radius:var(--rl);padding:16px;margin-bottom:12px}
+.C{background:var(--bg3);border:1px solid var(--bd);border-radius:var(--rl);padding:16px;margin-bottom:10px;transition:border-color .2s}
+.C:active{border-color:var(--bdh)}
 /* Tag */
-.tg{display:inline-block;padding:3px 10px;border-radius:var(--rf);font-size:10px;font-weight:600;white-space:nowrap}
+.tg{display:inline-flex;align-items:center;padding:3px 10px;border-radius:var(--rf);font-size:10px;font-weight:700;white-space:nowrap;letter-spacing:.3px}
 /* Chip */
 .ch{display:inline-block;padding:3px 10px;border-radius:var(--rf);font-size:10px;border:1px solid var(--t4);color:var(--t2);margin:2px}
-/* Btn */
-.bt{display:inline-flex;align-items:center;justify-content:center;padding:9px 18px;border-radius:var(--rf);font-size:12px;font-weight:600;cursor:pointer;border:none;font-family:var(--f);-webkit-tap-highlight-color:transparent}
-.bp{background:var(--gd);color:#fff}.bo{background:none;border:1.5px solid var(--t3);color:var(--t)}
+/* Button */
+.bt{display:inline-flex;align-items:center;justify-content:center;padding:10px 20px;border-radius:var(--rf);font-size:12px;font-weight:700;cursor:pointer;border:none;letter-spacing:.3px;-webkit-tap-highlight-color:transparent;transition:opacity .15s,transform .1s}
+.bt:active{opacity:.85;transform:scale(.97)}
+.bp{background:var(--gb);color:#fff}
+.bps{background:var(--gg);color:#1a1a2e;font-weight:800}
+.bo{background:none;border:1.5px solid var(--t4);color:var(--t)}
 .bf{width:100%}
+.bsm{padding:7px 14px;font-size:11px}
+/* Avatar */
+.av{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0}
 /* Search */
-.sr{width:100%;background:var(--bg3);border:1px solid var(--bd);color:var(--t);padding:10px 14px 10px 36px;border-radius:var(--rf);font-size:12px;font-family:var(--f);outline:none}
+.sr{width:100%;background:var(--bg3);border:1px solid var(--bd);color:var(--t);padding:11px 14px 11px 38px;border-radius:var(--rf);font-size:12px;font-family:var(--f);outline:none;transition:border-color .2s}
+.sr:focus{border-color:var(--bl)}
 .sr::placeholder{color:var(--t3)}
 /* Pills */
 .pl{display:flex;gap:8px;overflow-x:auto;margin-bottom:14px;-ms-overflow-style:none;scrollbar-width:none}
 .pl::-webkit-scrollbar{display:none}
-.pl>div{padding:7px 16px;border-radius:var(--rf);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;border:1px solid var(--t4);color:var(--t2);flex-shrink:0}
+.pl>div{padding:7px 16px;border-radius:var(--rf);font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;border:1px solid var(--t4);color:var(--t2);flex-shrink:0;transition:all .2s}
 .pl>div.a{background:var(--bl);color:#fff;border-color:var(--bl)}
 /* Sub tabs */
 .st{display:flex;background:var(--bg3);border-radius:var(--rf);padding:3px;border:1px solid var(--bd);margin-bottom:14px}
-.st>div{flex:1;text-align:center;padding:8px 0;border-radius:var(--rf);font-size:12px;font-weight:600;cursor:pointer;color:var(--t3)}
+.st>div{flex:1;text-align:center;padding:8px 0;border-radius:var(--rf);font-size:12px;font-weight:700;cursor:pointer;color:var(--t3);transition:all .2s}
 .st>div.a{background:var(--bl);color:#fff}
-/* Person */
-.pr{display:flex;align-items:center;gap:10px;padding:14px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--rl);margin-bottom:8px;cursor:pointer}
-/* Avatar */
-.av{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0}
-/* Course */
-.cr{display:flex;align-items:center;gap:12px;padding:16px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--rl);margin-bottom:10px;cursor:pointer}
-.cr>div:first-child{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-/* Match */
-.mc{text-align:center;padding:18px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--rl);min-width:190px;scroll-snap-align:start;flex-shrink:0}
-/* Progress */
-.pb{height:5px;background:rgba(24,144,255,.1);border-radius:3px;overflow:hidden}
-.pb>div{height:100%;border-radius:3px}
+/* Progress Bar */
+.pb{height:5px;background:rgba(59,130,246,.1);border-radius:3px;overflow:hidden}
+.pb>div{height:100%;border-radius:3px;transition:width .5s ease}
+/* Section Title */
+.stl{font-size:14px;font-weight:800;margin-bottom:10px;display:flex;align-items:center;gap:6px}
 /* Banner */
-.bn{width:100%;border-radius:var(--rl);overflow:hidden;position:relative;margin-bottom:12px;aspect-ratio:2/1;background:linear-gradient(135deg,#0a1628,#1a2a4a,#0f1e38)}
-.bn-o{position:absolute;inset:0;padding:16px;display:flex;flex-direction:column;justify-content:flex-end;background:linear-gradient(180deg,transparent 40%,rgba(7,11,20,.85))}
+.bn{width:100%;border-radius:var(--rl);overflow:hidden;position:relative;margin-bottom:12px}
+.bn-o{position:absolute;inset:0;padding:16px;display:flex;flex-direction:column;justify-content:flex-end}
+
+/* ===== Modal / Overlay ===== */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:200;align-items:flex-end;justify-content:center}
+.modal-overlay.show{display:flex}
+.modal{width:100%;max-width:430px;background:var(--bg2);border-radius:20px 20px 0 0;max-height:85vh;overflow-y:auto;animation:slideUp .3s ease}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.modal-handle{width:36px;height:4px;background:var(--t4);border-radius:2px;margin:10px auto 0}
+.modal-header{padding:16px 20px 12px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:var(--bg2);z-index:1}
+.modal-header h3{font-size:16px;font-weight:800}
+.modal-body{padding:16px 20px 32px}
+.modal-close{width:28px;height:28px;border-radius:50%;background:var(--bg4);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;color:var(--t2)}
+
+/* ===== Discovery Tab Specific ===== */
+.hot-card{position:relative;border-radius:var(--rl);overflow:hidden;margin-bottom:10px;cursor:pointer}
+.hot-card img,.hot-card .hot-bg{width:100%;aspect-ratio:16/8;object-fit:cover}
+.hot-bg{background:linear-gradient(135deg,#0f1b3d,#1a2d5a,#162244);display:flex;align-items:center;justify-content:center}
+.hot-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(6,8,15,.9));padding:14px;display:flex;flex-direction:column;justify-content:flex-end}
+.feed-item{display:flex;gap:10px;padding:14px 0;border-bottom:1px solid var(--bd)}
+.feed-item:last-child{border-bottom:none}
+
+/* ===== Growth Tab Specific ===== */
+.path-card{display:flex;align-items:center;gap:12px;padding:14px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--rl);margin-bottom:8px}
+.path-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.badge-wall{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.badge-item{text-align:center;padding:10px 4px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--rm)}
+.badge-item .bi{font-size:28px;display:block;margin-bottom:4px}
+.badge-item .bn2{font-size:9px;color:var(--t3);line-height:1.3}
+.rank-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--bd)}
+.rank-num{width:24px;text-align:center;font-weight:800;font-size:14px}
+.rank-1{color:var(--gd)}
+.rank-2{color:#C0C0C0}
+.rank-3{color:#CD7F32}
+
+/* ===== Task Detail Modal ===== */
+.milestone{display:flex;align-items:flex-start;gap:10px;padding:10px 0}
+.ms-dot{width:12px;height:12px;border-radius:50%;border:2px solid var(--bl);flex-shrink:0;margin-top:3px;position:relative}
+.ms-dot.done{background:var(--bl);border-color:var(--bl)}
+.ms-dot::after{content:'';position:absolute;left:50%;top:100%;width:2px;height:16px;background:var(--bd);transform:translateX(-50%)}
+.ms-dot.last::after{display:none}
+.escrow-badge{display:inline-flex;align-items:center;gap:4px;padding:6px 12px;background:var(--cyd);border:1px solid rgba(6,214,160,.2);border-radius:var(--rf);font-size:10px;font-weight:700;color:var(--cy)}
+
+/* ===== My Tab Specific ===== */
+.sbt-card{background:linear-gradient(135deg,rgba(139,92,246,.08),rgba(59,130,246,.06));border:1px solid rgba(139,92,246,.2);border-radius:var(--rl);padding:16px;margin-bottom:10px}
+.nft-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.nft-item{text-align:center;padding:12px 6px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--rm);position:relative;overflow:hidden}
+.nft-item::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gg)}
+.nft-icon{font-size:32px;display:block;margin-bottom:4px}
+.nft-name{font-size:9px;color:var(--t3);line-height:1.3}
+.nft-rare{font-size:8px;color:var(--gd);font-weight:700}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center}
+.stat-box{padding:10px 6px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--rm)}
+.stat-val{font-size:18px;font-weight:800}
+.stat-lbl{font-size:9px;color:var(--t3);margin-top:2px}
+.active-task{display:flex;align-items:center;gap:10px;padding:12px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--rl);margin-bottom:8px}
+
+/* ===== Form ===== */
+.fi{width:100%;background:var(--bg3);border:1px solid var(--bd);color:var(--t);padding:10px 14px;border-radius:var(--rm);font-size:12px;font-family:var(--f);outline:none;margin-bottom:8px}
+.fi:focus{border-color:var(--bl)}
+.fi::placeholder{color:var(--t3)}
+textarea.fi{min-height:80px;resize:vertical;line-height:1.5}
+.fl{font-size:11px;font-weight:700;color:var(--t2);margin-bottom:4px;display:block}
+
+/* ===== Shimmer / Glow Effects ===== */
+.glow-gold{text-shadow:0 0 20px rgba(212,168,67,.3)}
+.verified{color:var(--bl);font-size:9px;font-weight:800;letter-spacing:.5px;display:inline-flex;align-items:center;gap:2px}
+
+/* ===== Animations ===== */
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.fade-in{animation:fadeIn .3s ease}
 </style>
 </head>
 <body>
 <div class="app">
 <div id="M">
 
-<!-- ===================== 发现 ===================== -->
+<!-- ============================================================ -->
+<!-- TAB 0: 发现 (Discovery)                                      -->
+<!-- ============================================================ -->
 <div class="P on" id="p0">
-<div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0 10px">
-<div><div style="font-size:22px;font-weight:800">蓝血菁英</div><div style="font-size:11px;color:var(--t3)">发现 · <span style="color:var(--cy)">超级个体</span></div></div>
-<div style="width:34px;height:34px;border-radius:10px;background:var(--bld);display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--bl)">≡</div>
+
+  <!-- Header -->
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 0 8px">
+    <div>
+      <div style="font-size:24px;font-weight:900;letter-spacing:-.5px">蓝血菁英</div>
+      <div style="font-size:11px;color:var(--t3);margin-top:1px">发现 · <span style="color:var(--gd)">Blue Blood Elite</span></div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <div style="width:34px;height:34px;border-radius:10px;background:var(--bld);display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--bl)">🔔</div>
+    </div>
+  </div>
+
+  <!-- Search -->
+  <div style="position:relative;margin-bottom:16px">
+    <div style="position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--t3)">🔍</div>
+    <input class="sr" placeholder="搜索任务、技能、精英…">
+  </div>
+
+  <!-- Hot Tasks -->
+  <div class="stl">🔥 热门任务推荐</div>
+  <div style="display:flex;gap:10px;overflow-x:auto;margin-bottom:16px;scroll-snap-type:x mandatory;-ms-overflow-style:none;scrollbar-width:none;padding-bottom:4px">
+    <div style="min-width:260px;scroll-snap-align:start;flex-shrink:0;background:linear-gradient(135deg,#0f1b3d,#1a2d5a);border:1px solid var(--bd);border-radius:var(--rl);padding:14px;cursor:pointer" onclick="openTaskDetail(0)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <span class="tg" style="background:rgba(212,168,67,.15);color:var(--gd)">💰 高悬赏</span>
+        <span style="font-size:18px;font-weight:900;color:var(--gd)">$3,500 <span style="font-size:10px;color:var(--t3)">USDC</span></span>
+      </div>
+      <div style="font-size:14px;font-weight:800;margin-bottom:4px">任务池智能合约开发</div>
+      <div style="font-size:10px;color:var(--t3);margin-bottom:8px">为平台开发链上Escrow托管合约</div>
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:4px">
+          <div class="av" style="width:18px;height:18px;background:var(--bg4);font-size:8px;color:var(--t3)">O</div>
+          <span style="font-size:9px;color:var(--t3)">OPENCAIO 官方</span>
+        </div>
+        <span style="font-size:9px;color:var(--t3)">⏰ 剩余7天</span>
+      </div>
+    </div>
+    <div style="min-width:260px;scroll-snap-align:start;flex-shrink:0;background:linear-gradient(135deg,#0d1f2d,#132e3d);border:1px solid var(--bd);border-radius:var(--rl);padding:14px;cursor:pointer" onclick="openTaskDetail(1)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <span class="tg" style="background:var(--bld);color:var(--bll)">🤖 AI模型</span>
+        <span style="font-size:18px;font-weight:900;color:var(--cy)">$7,000 <span style="font-size:10px;color:var(--t3)">USDC</span></span>
+      </div>
+      <div style="font-size:14px;font-weight:800;margin-bottom:4px">企业知识库本地化部署</div>
+      <div style="font-size:10px;color:var(--t3);margin-bottom:8px">Llama-3 + RAG私有化部署方案</div>
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:4px">
+          <div class="av" style="width:18px;height:18px;background:var(--bg4);font-size:8px;color:var(--t3)">中</div>
+          <span style="font-size:9px;color:var(--t3)">中科院实验室</span>
+        </div>
+        <span style="font-size:9px;color:var(--t3)">⏰ 剩余12天</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interest Groups -->
+  <div class="stl">🌐 兴趣小组</div>
+  <div style="display:flex;gap:8px;overflow-x:auto;margin-bottom:16px;-ms-overflow-style:none;scrollbar-width:none;padding-bottom:4px">
+    <div style="padding:12px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--rl);min-width:115px;flex-shrink:0">
+      <div style="font-size:12px;font-weight:800"><span style="color:var(--gd)">#</span> Quant</div>
+      <div style="font-size:10px;color:var(--t2);margin-top:2px">量化交易研究</div>
+      <div style="font-size:9px;color:var(--t3);margin-top:3px">128 成员</div>
+    </div>
+    <div style="padding:12px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--rl);min-width:115px;flex-shrink:0">
+      <div style="font-size:12px;font-weight:800"><span style="color:var(--gd)">#</span> AI</div>
+      <div style="font-size:10px;color:var(--t2);margin-top:2px">AIGC 开发组</div>
+      <div style="font-size:9px;color:var(--t3);margin-top:3px">342 成员</div>
+    </div>
+    <div style="padding:12px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--rl);min-width:115px;flex-shrink:0">
+      <div style="font-size:12px;font-weight:800"><span style="color:var(--gd)">#</span> Web3</div>
+      <div style="font-size:10px;color:var(--t2);margin-top:2px">区块链研究</div>
+      <div style="font-size:9px;color:var(--t3);margin-top:3px">76 成员</div>
+    </div>
+    <div style="padding:12px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--rl);min-width:115px;flex-shrink:0">
+      <div style="font-size:12px;font-weight:800"><span style="color:var(--gd)">#</span> IOT</div>
+      <div style="font-size:10px;color:var(--t2);margin-top:2px">智能硬件社</div>
+      <div style="font-size:9px;color:var(--t3);margin-top:3px">89 成员</div>
+    </div>
+  </div>
+
+  <!-- Community Feed -->
+  <div class="stl">💬 社区动态</div>
+  <div class="C" style="padding:0">
+    <div class="feed-item">
+      <div class="av" style="width:36px;height:36px;background:linear-gradient(135deg,#F5A623,#FF6B6B);font-size:13px;color:#fff">云</div>
+      <div style="flex:1">
+        <div><span style="font-size:12px;font-weight:700">张云飞</span> <span class="verified">✓ VERIFIED</span></div>
+        <div style="font-size:11px;color:var(--t2);margin-top:2px">刚刚完成了「企业知识库本地化部署」任务，Llama-3-70B推理延迟优化到120ms/token 🔥</div>
+        <div style="display:flex;gap:12px;margin-top:6px;font-size:10px;color:var(--t3)">
+          <span>👍 24</span><span>💬 8</span><span>3分钟前</span>
+        </div>
+      </div>
+    </div>
+    <div class="feed-item">
+      <div class="av" style="width:36px;height:36px;background:linear-gradient(135deg,#06D6A0,#118AB2);font-size:13px;color:#fff">陈</div>
+      <div style="flex:1">
+        <div><span style="font-size:12px;font-weight:700">陈明远</span> <span class="verified">✓ VERIFIED</span></div>
+        <div style="font-size:11px;color:var(--t2);margin-top:2px">分享一个用 Solidity 写的 Escrow 合约模板，支持里程碑分批释放资金，欢迎PR！🔗</div>
+        <div style="display:flex;gap:12px;margin-top:6px;font-size:10px;color:var(--t3)">
+          <span>👍 42</span><span>💬 15</span><span>18分钟前</span>
+        </div>
+      </div>
+    </div>
+    <div class="feed-item">
+      <div class="av" style="width:36px;height:36px;background:linear-gradient(135deg,#EC4899,#F59E0B);font-size:13px;color:#fff">静</div>
+      <div style="flex:1">
+        <div><span style="font-size:12px;font-weight:700">赵静怡</span> <span class="verified">✓ VERIFIED</span></div>
+        <div style="font-size:11px;color:var(--t2);margin-top:2px">蓝血春季黑客松组队中！缺一个前端大佬，我们已有AI工程师+合约开发，目标做一个去中心化任务看板 🚀</div>
+        <div style="display:flex;gap:12px;margin-top:6px;font-size:10px;color:var(--t3)">
+          <span>👍 31</span><span>💬 22</span><span>1小时前</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Smart Match -->
+  <div class="stl">🎯 智能匹配推荐</div>
+  <div style="display:flex;gap:10px;overflow-x:auto;margin-bottom:16px;scroll-snap-type:x mandatory;-ms-overflow-style:none;scrollbar-width:none;padding-bottom:4px">
+    <div style="text-align:center;padding:16px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--rl);min-width:180px;scroll-snap-align:start;flex-shrink:0">
+      <div style="font-size:10px;color:var(--cy);font-weight:800;letter-spacing:1px;margin-bottom:6px">98% MATCH</div>
+      <div class="av" style="width:50px;height:50px;margin:0 auto 6px;background:linear-gradient(135deg,#F5A623,#FF6B6B);font-size:17px;color:#fff">云</div>
+      <div style="font-size:13px;font-weight:800">张云飞</div>
+      <div style="font-size:10px;color:var(--t2);margin-bottom:6px">AI · 清华大学</div>
+      <div style="display:flex;gap:3px;justify-content:center;flex-wrap:wrap;margin-bottom:10px"><span class="ch">Python</span><span class="ch">NLP</span></div>
+      <button class="bt bp bf bsm">建立连接</button>
+    </div>
+    <div style="text-align:center;padding:16px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--rl);min-width:180px;scroll-snap-align:start;flex-shrink:0">
+      <div style="font-size:10px;color:var(--gd);font-weight:800;letter-spacing:1px;margin-bottom:6px">95% MATCH</div>
+      <div class="av" style="width:50px;height:50px;margin:0 auto 6px;background:linear-gradient(135deg,#8B5CF6,#3B82F6);font-size:17px;color:#fff">艾</div>
+      <div style="font-size:13px;font-weight:800">李艾米</div>
+      <div style="font-size:10px;color:var(--t2);margin-bottom:6px">量化金融 · 北理工</div>
+      <div style="display:flex;gap:3px;justify-content:center;flex-wrap:wrap;margin-bottom:10px"><span class="ch">Java</span><span class="ch">数据分析</span></div>
+      <button class="bt bp bf bsm">建立连接</button>
+    </div>
+    <div style="text-align:center;padding:16px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--rl);min-width:180px;scroll-snap-align:start;flex-shrink:0">
+      <div style="font-size:10px;color:var(--gd);font-weight:800;letter-spacing:1px;margin-bottom:6px">91% MATCH</div>
+      <div class="av" style="width:50px;height:50px;margin:0 auto 6px;background:linear-gradient(135deg,#06D6A0,#118AB2);font-size:17px;color:#fff">陈</div>
+      <div style="font-size:13px;font-weight:800">陈明远</div>
+      <div style="font-size:10px;color:var(--t2);margin-bottom:6px">全栈 · 中科院</div>
+      <div style="display:flex;gap:3px;justify-content:center;flex-wrap:wrap;margin-bottom:10px"><span class="ch">Go</span><span class="ch">K8s</span></div>
+      <button class="bt bp bf bsm">建立连接</button>
+    </div>
+  </div>
+
+  <!-- All Elites -->
+  <div class="stl">👥 全部精英</div>
+  <div style="display:flex;align-items:center;gap:10px;padding:14px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--rl);margin-bottom:8px;cursor:pointer" onclick="openEliteDetail()">
+    <div class="av" style="width:42px;height:42px;background:linear-gradient(135deg,#F5A623,#FF6B6B);font-size:15px;color:#fff">云</div>
+    <div style="flex:1">
+      <div><span style="font-size:13px;font-weight:700">张云飞</span> <span class="verified">✓ VERIFIED</span></div>
+      <div style="font-size:10px;color:var(--t2)">人工智能 | 清华大学</div>
+      <div style="font-size:9px;color:var(--t3);margin-top:1px">#Python #NLP #LLM</div>
+    </div>
+    <div style="color:var(--t4);font-size:16px">›</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px;padding:14px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--rl);margin-bottom:8px;cursor:pointer">
+    <div class="av" style="width:42px;height:42px;background:linear-gradient(135deg,#8B5CF6,#3B82F6);font-size:15px;color:#fff">艾</div>
+    <div style="flex:1">
+      <div><span style="font-size:13px;font-weight:700">李艾米</span> <span class="verified">✓ VERIFIED</span></div>
+      <div style="font-size:10px;color:var(--t2)">量化金融 | 北京理工大学</div>
+      <div style="font-size:9px;color:var(--t3);margin-top:1px">#Java #Spring #数据分析</div>
+    </div>
+    <div style="color:var(--t4);font-size:16px">›</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px;padding:14px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--rl);margin-bottom:8px;cursor:pointer">
+    <div class="av" style="width:42px;height:42px;background:linear-gradient(135deg,#06D6A0,#118AB2);font-size:15px;color:#fff">陈</div>
+    <div style="flex:1">
+      <div><span style="font-size:13px;font-weight:700">陈明远</span> <span class="verified">✓ VERIFIED</span></div>
+      <div style="font-size:10px;color:var(--t2)">全栈开发 | 中科院</div>
+      <div style="font-size:9px;color:var(--t3);margin-top:1px">#Go #Kubernetes #微服务</div>
+    </div>
+    <div style="color:var(--t4);font-size:16px">›</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px;padding:14px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--rl);margin-bottom:8px;cursor:pointer">
+    <div class="av" style="width:42px;height:42px;background:linear-gradient(135deg,#EC4899,#F59E0B);font-size:15px;color:#fff">静</div>
+    <div style="flex:1">
+      <div><span style="font-size:13px;font-weight:700">赵静怡</span> <span class="verified">✓ VERIFIED</span></div>
+      <div style="font-size:10px;color:var(--t2)">产品设计 | 浙江大学</div>
+      <div style="font-size:9px;color:var(--t3);margin-top:1px">#Figma #用户研究 #B端</div>
+    </div>
+    <div style="color:var(--t4);font-size:16px">›</div>
+  </div>
+
 </div>
 
-<div style="position:relative;margin-bottom:14px"><div style="position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--t3)">🔍</div><input class="sr" placeholder="搜索姓名、技术栈、本地化部署…"><div style="position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--t3)">⚙</div></div>
-
-<div style="margin-bottom:14px"><div style="font-size:13px;font-weight:700;margin-bottom:8px">• 兴趣小组</div>
-<div style="display:flex;gap:8px;overflow-x:auto;-ms-overflow-style:none;scrollbar-width:none">
-<div style="padding:10px 14px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--rl);min-width:110px;flex-shrink:0"><div style="font-size:11px;font-weight:700"><span style="color:var(--bl)">#</span>Quant</div><div style="font-size:10.5px;font-weight:600">量化交易研究</div><div style="font-size:9px;color:var(--t3);margin-top:3px">128 位成员参与</div></div>
-<div style="padding:10px 14px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--rl);min-width:110px;flex-shrink:0"><div style="font-size:11px;font-weight:700"><span style="color:var(--bl)">#</span>AI</div><div style="font-size:10.5px;font-weight:600">AIGC 开发组</div><div style="font-size:9px;color:var(--t3);margin-top:3px">342 位成员参与</div></div>
-<div style="padding:10px 14px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--rl);min-width:110px;flex-shrink:0"><div style="font-size:11px;font-weight:700"><span style="color:var(--bl)">#</span>IOT</div><div style="font-size:10.5px;font-weight:600">智能硬件社</div><div style="font-size:9px;color:var(--t3);margin-top:3px">89 位成员参与</div></div>
-<div style="padding:10px 14px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--rl);min-width:110px;flex-shrink:0"><div style="font-size:11px;font-weight:700"><span style="color:var(--bl)">#</span>Web3</div><div style="font-size:10.5px;font-weight:600">区块链研究</div><div style="font-size:9px;color:var(--t3);margin-top:3px">76 位成员参与</div></div>
-</div></div>
-
-<div style="margin-bottom:14px"><div style="font-size:13px;font-weight:700;margin-bottom:8px">智能匹配推荐</div>
-<div style="display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;-ms-overflow-style:none;scrollbar-width:none">
-<div class="mc"><div style="font-size:11px;color:var(--cy);font-weight:700;margin-bottom:6px">98% MATCH</div><div class="av" style="width:52px;height:52px;margin:0 auto 6px;background:linear-gradient(135deg,#F5A623,#FF6B6B);font-size:18px;color:#fff">云</div><div style="font-size:13px;font-weight:700">张云飞</div><div style="font-size:10px;color:var(--t2);margin-bottom:6px">人工智能 · 清华大学</div><div style="display:flex;gap:3px;justify-content:center;flex-wrap:wrap;margin-bottom:10px"><span class="ch">Python</span><span class="ch">NLP</span><span class="ch">模型训练</span></div><button class="bt bp bf" style="font-size:11px;padding:8px">建立连接</button></div>
-<div class="mc"><div style="font-size:11px;color:var(--cy);font-weight:700;margin-bottom:6px">95% MATCH</div><div class="av" style="width:52px;height:52px;margin:0 auto 6px;background:linear-gradient(135deg,#8B5CF6,#3B82F6);font-size:18px;color:#fff">艾</div><div style="font-size:13px;font-weight:700">李艾米</div><div style="font-size:10px;color:var(--t2);margin-bottom:6px">量化金融 · 北京理工大学</div><div style="display:flex;gap:3px;justify-content:center;flex-wrap:wrap;margin-bottom:10px"><span class="ch">Java</span><span class="ch">Spring</span><span class="ch">数据分析</span></div><button class="bt bp bf" style="font-size:11px;padding:8px">建立连接</button></div>
-<div class="mc"><div style="font-size:11px;color:var(--go);font-weight:700;margin-bottom:6px">91% MATCH</div><div class="av" style="width:52px;height:52px;margin:0 auto 6px;background:linear-gradient(135deg,#00D4AA,#1890FF);font-size:18px;color:#fff">浩</div><div style="font-size:13px;font-weight:700">王浩然</div><div style="font-size:10px;color:var(--t2);margin-bottom:6px">软件工程 · 复旦大学</div><div style="display:flex;gap:3px;justify-content:center;flex-wrap:wrap;margin-bottom:10px"><span class="ch">React</span><span class="ch">Vue</span><span class="ch">Node.js</span></div><button class="bt bp bf" style="font-size:11px;padding:8px">建立连接</button></div>
-</div></div>
-
-<div><div style="font-size:13px;font-weight:700;margin-bottom:8px">全部精英</div>
-<div class="pr" onclick="G(5)"><div class="av" style="width:42px;height:42px;background:linear-gradient(135deg,#F5A623,#FF6B6B);font-size:15px;color:#fff">云</div><div style="flex:1"><div><span style="font-size:12.5px;font-weight:600">张云飞</span> <span style="color:var(--bl);font-size:9.5px;font-weight:700">VERIFIED</span></div><div style="font-size:10px;color:var(--t2)">人工智能 | 清华大学</div><div style="font-size:9px;color:var(--t3);margin-top:1px">#Python #NLP #模型训练</div></div><div style="color:var(--t4)">›</div></div>
-<div class="pr"><div class="av" style="width:42px;height:42px;background:linear-gradient(135deg,#8B5CF6,#3B82F6);font-size:15px;color:#fff">艾</div><div style="flex:1"><div><span style="font-size:12.5px;font-weight:600">李艾米</span> <span style="color:var(--bl);font-size:9.5px;font-weight:700">VERIFIED</span></div><div style="font-size:10px;color:var(--t2)">量化金融 | 北京理工大学</div><div style="font-size:9px;color:var(--t3);margin-top:1px">#Java #Spring #数据分析</div></div><div style="color:var(--t4)">›</div></div>
-<div class="pr"><div class="av" style="width:42px;height:42px;background:linear-gradient(135deg,#00D4AA,#1890FF);font-size:15px;color:#fff">浩</div><div style="flex:1"><div><span style="font-size:12.5px;font-weight:600">王浩然</span> <span style="color:var(--bl);font-size:9.5px;font-weight:700">VERIFIED</span></div><div style="font-size:10px;color:var(--t2)">软件工程 | 复旦大学</div><div style="font-size:9px;color:var(--t3);margin-top:1px">#React #Vue #Node.js</div></div><div style="color:var(--t4)">›</div></div>
-<div class="pr"><div class="av" style="width:42px;height:42px;background:linear-gradient(135deg,#EC4899,#F59E0B);font-size:15px;color:#fff">静</div><div style="flex:1"><div><span style="font-size:12.5px;font-weight:600">赵静怡</span> <span style="color:var(--bl);font-size:9.5px;font-weight:700">VERIFIED</span></div><div style="font-size:10px;color:var(--t2)">产品设计 | 浙江大学</div><div style="font-size:9px;color:var(--t3);margin-top:1px">#Figma #用户研究 #B端产品</div></div><div style="color:var(--t4)">›</div></div>
-<div class="pr"><div class="av" style="width:42px;height:42px;background:linear-gradient(135deg,#06D6A0,#118AB2);font-size:15px;color:#fff">陈</div><div style="flex:1"><div><span style="font-size:12.5px;font-weight:600">陈明远</span> <span style="color:var(--bl);font-size:9.5px;font-weight:700">VERIFIED</span></div><div style="font-size:10px;color:var(--t2)">全栈开发 | 中科院</div><div style="font-size:9px;color:var(--t3);margin-top:1px">#Go #Kubernetes #微服务</div></div><div style="color:var(--t4)">›</div></div>
-</div>
-</div>
-
-<!-- ===================== 成长 ===================== -->
+<!-- ============================================================ -->
+<!-- TAB 1: 成长 (Growth)                                         -->
+<!-- ============================================================ -->
 <div class="P" id="p1">
-<div style="padding:14px 0 10px"><div style="font-size:22px;font-weight:800">成长</div></div>
-<div class="bn"><div class="bn-o"><div class="tg" style="background:var(--bl);color:#fff;margin-bottom:4px;width:fit-content" id="bTag">精品课程</div><div style="font-size:18px;font-weight:800" id="bTi">零基础 AIGC 实战课程</div><div style="font-size:11px;color:var(--t2)" id="bSt">从 Prompt 到本地化部署全流程</div></div></div>
-<div class="st" id="gTabs"><div class="a" onclick="SG('c')">精品课程</div><div onclick="SG('h')">黑客松</div><div onclick="SG('j')">AI岗位(CAIO)</div></div>
+  <div style="padding:16px 0 8px"><div style="font-size:24px;font-weight:900;letter-spacing:-.5px">成长</div><div style="font-size:11px;color:var(--t3)">学习路径 · 技能认证 · 排行榜</div></div>
 
-<div id="gc">
-<div style="font-size:13px;font-weight:700;margin-bottom:8px">核心成长专题</div>
-<div class="cr" onclick="G(6)"><div style="background:var(--bld);color:var(--bl)">💻</div><div style="flex:1"><div style="font-size:12.5px;font-weight:600">本地化部署架构实战</div><div style="font-size:10px;color:var(--t3)">课程阶段：中级</div></div><div style="color:var(--t3)">▶</div></div>
-<div class="cr"><div style="background:var(--cyd);color:var(--cy)">🧠</div><div style="flex:1"><div style="font-size:12.5px;font-weight:600">企业级 RAG 方案精讲</div><div style="font-size:10px;color:var(--t3)">课程阶段：高级</div></div><div style="color:var(--t3)">▶</div></div>
-<div class="cr"><div style="background:rgba(139,92,246,.12);color:#8B5CF6">🎯</div><div style="flex:1"><div style="font-size:12.5px;font-weight:600">CAIO 商业思维与管理</div><div style="font-size:10px;color:var(--t3)">课程阶段：顶级</div></div><div style="color:var(--t3)">▶</div></div>
-<div class="cr"><div style="background:var(--god);color:var(--go)">📊</div><div style="flex:1"><div style="font-size:12.5px;font-weight:600">AI Agent 从零到一</div><div style="font-size:10px;color:var(--t3)">课程阶段：中级</div></div><div style="color:var(--t3)">▶</div></div>
+  <!-- My Learning Path Progress -->
+  <div class="stl">📊 我的学习路径</div>
+  <div class="C" style="background:linear-gradient(135deg,rgba(30,58,138,.15),rgba(6,214,160,.05));border-color:var(--bdh)">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <div>
+        <div style="font-size:14px;font-weight:800">AI全栈工程师</div>
+        <div style="font-size:10px;color:var(--t3)">已完成 4/7 阶段</div>
+      </div>
+      <div style="font-size:20px;font-weight:900;color:var(--cy)">57%</div>
+    </div>
+    <div class="pb" style="height:8px;margin-bottom:12px"><div style="width:57%;background:var(--gc);border-radius:4px"></div></div>
+    <div style="display:flex;justify-content:space-between;text-align:center">
+      <div style="flex:1"><div style="font-size:16px;margin-bottom:2px">✅</div><div style="font-size:8px;color:var(--t3)">Python</div></div>
+      <div style="flex:1"><div style="font-size:16px;margin-bottom:2px">✅</div><div style="font-size:8px;color:var(--t3)">ML基础</div></div>
+      <div style="flex:1"><div style="font-size:16px;margin-bottom:2px">✅</div><div style="font-size:8px;color:var(--t3)">LLM</div></div>
+      <div style="flex:1"><div style="font-size:16px;margin-bottom:2px">✅</div><div style="font-size:8px;color:var(--t3)">RAG</div></div>
+      <div style="flex:1"><div style="font-size:16px;margin-bottom:2px">🔄</div><div style="font-size:8px;color:var(--gd)">Agent</div></div>
+      <div style="flex:1"><div style="font-size:16px;margin-bottom:2px">🔒</div><div style="font-size:8px;color:var(--t4)">部署</div></div>
+      <div style="flex:1"><div style="font-size:16px;margin-bottom:2px">🔒</div><div style="font-size:8px;color:var(--t4)">实战</div></div>
+    </div>
+  </div>
+
+  <!-- Skill Certification Badges -->
+  <div class="stl">🏅 技能认证</div>
+  <div class="badge-wall" style="margin-bottom:16px">
+    <div class="badge-item"><span class="bi">🐍</span><div class="bn2">Python<br>高级</div><div style="margin-top:2px"><span class="tg" style="background:var(--cyd);color:var(--cy);font-size:8px">已认证</span></div></div>
+    <div class="badge-item"><span class="bi">🧠</span><div class="bn2">NLP<br>高级</div><div style="margin-top:2px"><span class="tg" style="background:var(--cyd);color:var(--cy);font-size:8px">已认证</span></div></div>
+    <div class="badge-item"><span class="bi">🔗</span><div class="bn2">Solidity<br>中级</div><div style="margin-top:2px"><span class="tg" style="background:var(--gdd);color:var(--gd);font-size:8px">考核中</span></div></div>
+    <div class="badge-item"><span class="bi">🐳</span><div class="bn2">Docker<br>高级</div><div style="margin-top:2px"><span class="tg" style="background:var(--cyd);color:var(--cy);font-size:8px">已认证</span></div></div>
+    <div class="badge-item"><span class="bi">📊</span><div class="bn2">数据分析<br>中级</div><div style="margin-top:2px"><span class="tg" style="background:var(--cyd);color:var(--cy);font-size:8px">已认证</span></div></div>
+    <div class="badge-item"><span class="bi">⚡</span><div class="bn2">LLM部署<br>高级</div><div style="margin-top:2px"><span class="tg" style="background:var(--cyd);color:var(--cy);font-size:8px">已认证</span></div></div>
+    <div class="badge-item"><span class="bi">🤖</span><div class="bn2">Agent<br>初级</div><div style="margin-top:2px"><span class="tg" style="background:var(--bld);color:var(--bll);font-size:8px">学习中</span></div></div>
+    <div class="badge-item" style="opacity:.5"><span class="bi">🔒</span><div class="bn2">RAG<br>高级</div><div style="margin-top:2px"><span class="tg" style="background:rgba(255,255,255,.05);color:var(--t4);font-size:8px">未解锁</span></div></div>
+  </div>
+
+  <!-- Leaderboard -->
+  <div class="stl">🏆 排行榜 <span style="font-size:10px;color:var(--t3);font-weight:400;margin-left:4px">本月</span></div>
+  <div class="C" style="padding:12px 14px">
+    <div class="rank-row">
+      <div class="rank-num rank-1">1</div>
+      <div class="av" style="width:32px;height:32px;background:linear-gradient(135deg,#F5A623,#FF6B6B);font-size:12px;color:#fff">云</div>
+      <div style="flex:1"><div style="font-size:12px;font-weight:700">张云飞</div><div style="font-size:9px;color:var(--t3)">清华大学 · AI</div></div>
+      <div style="text-align:right"><div style="font-size:14px;font-weight:800;color:var(--gd)">9,850</div><div style="font-size:8px;color:var(--t3)">积分</div></div>
+    </div>
+    <div class="rank-row">
+      <div class="rank-num rank-2">2</div>
+      <div class="av" style="width:32px;height:32px;background:linear-gradient(135deg,#06D6A0,#118AB2);font-size:12px;color:#fff">陈</div>
+      <div style="flex:1"><div style="font-size:12px;font-weight:700">陈明远</div><div style="font-size:9px;color:var(--t3)">中科院 · 全栈</div></div>
+      <div style="text-align:right"><div style="font-size:14px;font-weight:800">8,420</div><div style="font-size:8px;color:var(--t3)">积分</div></div>
+    </div>
+    <div class="rank-row">
+      <div class="rank-num rank-3">3</div>
+      <div class="av" style="width:32px;height:32px;background:linear-gradient(135deg,#8B5CF6,#3B82F6);font-size:12px;color:#fff">艾</div>
+      <div style="flex:1"><div style="font-size:12px;font-weight:700">李艾米</div><div style="font-size:9px;color:var(--t3)">北理工 · 量化</div></div>
+      <div style="text-align:right"><div style="font-size:14px;font-weight:800">7,200</div><div style="font-size:8px;color:var(--t3)">积分</div></div>
+    </div>
+    <div class="rank-row" style="border-bottom:none">
+      <div class="rank-num" style="color:var(--t3)">4</div>
+      <div class="av" style="width:32px;height:32px;background:linear-gradient(135deg,#EC4899,#F59E0B);font-size:12px;color:#fff">静</div>
+      <div style="flex:1"><div style="font-size:12px;font-weight:700">赵静怡</div><div style="font-size:9px;color:var(--t3)">浙江大学 · 产品</div></div>
+      <div style="text-align:right"><div style="font-size:14px;font-weight:800">6,100</div><div style="font-size:8px;color:var(--t3)">积分</div></div>
+    </div>
+  </div>
+
+  <!-- Courses -->
+  <div class="stl">📚 精品课程</div>
+  <div class="st" id="gTabs"><div class="a" onclick="SG('c')">课程</div><div onclick="SG('h')">黑客松</div><div onclick="SG('j')">CAIO岗位</div></div>
+
+  <div id="gc">
+    <div class="path-card"><div class="path-icon" style="background:var(--bld);color:var(--bl)">💻</div><div style="flex:1"><div style="font-size:13px;font-weight:700">本地化部署架构实战</div><div style="font-size:10px;color:var(--t3)">中级 · 12课时 · 342人</div></div><div style="color:var(--t3)">▶</div></div>
+    <div class="path-card"><div class="path-icon" style="background:var(--cyd);color:var(--cy)">🧠</div><div style="flex:1"><div style="font-size:13px;font-weight:700">企业级 RAG 方案精讲</div><div style="font-size:10px;color:var(--t3)">高级 · 8课时 · 189人</div></div><div style="color:var(--t3)">▶</div></div>
+    <div class="path-card"><div class="path-icon" style="background:var(--pud);color:var(--pu)">🎯</div><div style="flex:1"><div style="font-size:13px;font-weight:700">CAIO 商业思维与管理</div><div style="font-size:10px;color:var(--t3)">顶级 · 6课时 · 78人</div></div><div style="color:var(--t3)">▶</div></div>
+    <div class="path-card"><div class="path-icon" style="background:var(--gdd);color:var(--gd)">🔗</div><div style="flex:1"><div style="font-size:13px;font-weight:700">Solidity 合约开发入门</div><div style="font-size:10px;color:var(--t3)">初级 · 10课时 · 256人</div></div><div style="color:var(--t3)">▶</div></div>
+  </div>
+
+  <div id="gh" style="display:none">
+    <div class="C" style="background:linear-gradient(135deg,rgba(30,58,138,.1),rgba(6,214,160,.06));border-color:var(--bdh)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><div style="font-size:32px">🏆</div><div><div style="font-size:15px;font-weight:800">蓝血春季黑客松 V2.0</div><div style="font-size:10px;color:var(--t2);margin-top:2px">超级个体项目商业化，原型变生产力</div></div></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+        <div style="text-align:center;padding:12px;background:var(--bg);border-radius:10px"><div style="font-size:9px;color:var(--t3)">奖金池</div><div style="font-size:20px;font-weight:900;color:var(--gd)">$15,000</div></div>
+        <div style="text-align:center;padding:12px;background:var(--bg);border-radius:10px"><div style="font-size:9px;color:var(--t3)">名额</div><div style="font-size:20px;font-weight:900">仅 20 组</div></div>
+      </div>
+      <button class="bt bps bf">立即报名参赛</button>
+    </div>
+  </div>
+
+  <div id="gj" style="display:none">
+    <div class="C">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><span class="tg" style="background:var(--rdd);color:var(--rd)">CAIO需求</span><span style="font-size:16px;font-weight:900;color:var(--gd)">$8k+/月</span></div>
+      <div style="font-size:14px;font-weight:800;margin-bottom:3px">CAIO 首席AI官</div>
+      <div style="font-size:11px;color:var(--t2);line-height:1.6">为某独角兽企业寻访首席AI官，需具备全栈AI架构能力与商业敏锐度。</div>
+    </div>
+    <div class="C">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><span class="tg" style="background:var(--bld);color:var(--bll)">企业需求</span><span style="font-size:16px;font-weight:900;color:var(--gd)">$5-8k/月</span></div>
+      <div style="font-size:14px;font-weight:800;margin-bottom:3px">AI产品总监 — 大模型方向</div>
+      <div style="font-size:11px;color:var(--t2);line-height:1.6">负责企业级大模型产品0→1，需有AIGC/RAG落地经验。base上海。</div>
+    </div>
+  </div>
 </div>
 
-<div id="gh" style="display:none">
-<div class="C" style="background:linear-gradient(135deg,rgba(24,144,255,.08),rgba(0,212,170,.06));border-color:var(--bdh)">
-<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><div style="font-size:32px">🏆</div><div><div style="font-size:15px;font-weight:800">蓝血春季黑客松 V2.0</div><div style="font-size:10.5px;color:var(--t2);margin-top:2px">聚焦于"超级个体项目商业化"，将你的原型变为生产力。</div></div></div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px"><div style="text-align:center;padding:12px;background:var(--bg);border-radius:10px"><div style="font-size:9px;color:var(--t3)">奖金池</div><div style="font-size:20px;font-weight:800;color:var(--cy)">¥100,000</div></div><div style="text-align:center;padding:12px;background:var(--bg);border-radius:10px"><div style="font-size:9px;color:var(--t3)">名额</div><div style="font-size:20px;font-weight:800">仅限 20 组</div></div></div>
-<button class="bt bp bf">立即认领参赛</button>
-</div>
-<div class="C"><div style="font-size:13px;font-weight:700;margin-bottom:8px">📋 赛事日程</div><div style="display:flex;flex-direction:column;gap:7px"><div style="display:flex;align-items:center;gap:8px"><div style="width:7px;height:7px;border-radius:50%;background:var(--cy);flex-shrink:0"></div><div style="font-size:11.5px"><b>03/01-03/07</b>：组队报名</div></div><div style="display:flex;align-items:center;gap:8px"><div style="width:7px;height:7px;border-radius:50%;background:var(--bl);flex-shrink:0"></div><div style="font-size:11.5px"><b>03/08-03/21</b>：开发冲刺</div></div><div style="display:flex;align-items:center;gap:8px"><div style="width:7px;height:7px;border-radius:50%;background:var(--go);flex-shrink:0"></div><div style="font-size:11.5px"><b>03/22-03/23</b>：Demo Day</div></div><div style="display:flex;align-items:center;gap:8px"><div style="width:7px;height:7px;border-radius:50%;background:var(--rd);flex-shrink:0"></div><div style="font-size:11.5px"><b>03/24</b>：颁奖 & CAIO内推</div></div></div></div>
-</div>
-
-<div id="gj" style="display:none">
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><div style="font-size:13px;font-weight:700">俱乐部岗位对接</div><div style="font-size:10.5px;color:var(--bl);font-weight:600">CLUB SOURCES</div></div>
-<div class="C"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><span class="tg" style="background:var(--rd);color:#fff">CAIO需求</span><span style="font-size:15px;font-weight:800;color:var(--cy)">¥50k+</span></div><div style="font-size:14px;font-weight:700;margin-bottom:3px">CAIO 首席AI官候选人内推</div><div style="font-size:11px;color:var(--t2);line-height:1.6;margin-bottom:6px">为某独角兽企业寻访首席AI官，需具备全栈AI架构能力与商业敏锐度。</div><div style="display:flex;align-items:center;gap:5px"><div class="av" style="width:20px;height:20px;background:var(--bg4);font-size:9px;color:var(--t3)">L</div><span style="font-size:9.5px;color:var(--t3)">蓝血俱乐部直发</span></div></div>
-<div class="C"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><span class="tg" style="background:var(--bl);color:#fff">企业需求</span><span style="font-size:15px;font-weight:800;color:var(--cy)">¥35-60k</span></div><div style="font-size:14px;font-weight:700;margin-bottom:3px">AI产品总监 — 大模型方向</div><div style="font-size:11px;color:var(--t2);line-height:1.6;margin-bottom:6px">负责企业级大模型产品从0到1，需有AIGC/RAG落地经验。base上海。</div><div style="display:flex;align-items:center;gap:5px"><div class="av" style="width:20px;height:20px;background:var(--bg4);font-size:9px;color:var(--t3)">T</div><span style="font-size:9.5px;color:var(--t3)">某AI上市公司HR直招</span></div></div>
-</div>
-</div>
-
-<!-- ===================== 任务池 ===================== -->
+<!-- ============================================================ -->
+<!-- TAB 2: 任务 (Task Pool)                                       -->
+<!-- ============================================================ -->
 <div class="P" id="p2">
-<div style="padding:14px 0 6px"><div style="font-size:22px;font-weight:800">任务池</div><div style="font-size:11px;color:var(--t3)">技能变现 · 实战落地</div></div>
-<div class="pl"><div class="a" onclick="SP(this)">全部</div><div onclick="SP(this)">本地化部署</div><div onclick="SP(this)">高悬赏</div><div onclick="SP(this)">短期实战</div><div onclick="SP(this)">智能合约</div></div>
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 0 6px">
+    <div><div style="font-size:24px;font-weight:900;letter-spacing:-.5px">任务池</div><div style="font-size:11px;color:var(--t3)">技能变现 · 链上托管</div></div>
+    <button class="bt bps bsm" onclick="openCreateTask()">＋ 发布</button>
+  </div>
 
-<div class="C"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><div style="display:flex;align-items:center;gap:5px"><span class="tg" style="background:var(--bl);color:#fff">本地化部署</span><span style="font-size:10px;color:var(--t3)">周期:15天</span></div><div style="font-size:17px;font-weight:800;color:var(--bl)">¥12,000</div></div><div style="font-size:15px;font-weight:700;margin-bottom:5px">企业知识库本地化部署 (Llama-3)</div><div style="font-size:11px;color:var(--t2);line-height:1.6;margin-bottom:8px">需要在私有服务器环境部署Llama-3-70B模型，并完成RAG知识库对接，确保数据不出本地内网。</div><div style="display:flex;gap:5px;margin-bottom:10px"><span class="ch">#Llama3</span><span class="ch">#Docker</span><span class="ch">#RAG</span></div><div style="display:flex;justify-content:space-between;align-items:center"><div style="display:flex;align-items:center;gap:5px"><div class="av" style="width:22px;height:22px;background:var(--bg4);font-size:9px;color:var(--t3)">中</div><span style="font-size:10px;color:var(--t3)">中科院背景实验室</span></div><button class="bt bo" style="font-size:11px;padding:6px 14px">认领任务</button></div></div>
+  <div class="pl" id="taskPills">
+    <div class="a" onclick="filterTask(this,'all')">全部</div>
+    <div onclick="filterTask(this,'deploy')">本地化部署</div>
+    <div onclick="filterTask(this,'high')">高悬赏</div>
+    <div onclick="filterTask(this,'short')">短期实战</div>
+    <div onclick="filterTask(this,'contract')">智能合约</div>
+    <div onclick="filterTask(this,'agent')">Agent</div>
+  </div>
 
-<div class="C"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><div style="display:flex;align-items:center;gap:5px"><span class="tg" style="background:rgba(139,92,246,.15);color:#8B5CF6">AI模型</span><span style="font-size:10px;color:var(--t3)">周期:60天</span></div><div style="font-size:17px;font-weight:800;color:var(--bl)">¥50,000</div></div><div style="font-size:15px;font-weight:700;margin-bottom:5px">CAIO 首席AI官候选人内推</div><div style="font-size:11px;color:var(--t2);line-height:1.6;margin-bottom:8px">为某独角兽企业寻访首席AI官，需具备全栈AI架构能力与商业敏锐度。</div><div style="display:flex;gap:5px;margin-bottom:10px"><span class="ch">#架构</span><span class="ch">#商业化</span><span class="ch">#AI</span></div><div style="display:flex;justify-content:space-between;align-items:center"><div style="display:flex;align-items:center;gap:5px"><div class="av" style="width:22px;height:22px;background:var(--bg4);font-size:9px;color:var(--t3)">L</div><span style="font-size:10px;color:var(--t3)">蓝血俱乐部直发</span></div><button class="bt bo" style="font-size:11px;padding:6px 14px">认领任务</button></div></div>
+  <!-- Task Cards -->
+  <div id="taskList">
 
-<div class="C"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><div style="display:flex;align-items:center;gap:5px"><span class="tg" style="background:var(--god);color:var(--go)">高悬赏</span><span style="font-size:10px;color:var(--t3)">周期:30天</span></div><div style="font-size:17px;font-weight:800;color:var(--bl)">¥25,000</div></div><div style="font-size:15px;font-weight:700;margin-bottom:5px">多模态 RAG 系统开发</div><div style="font-size:11px;color:var(--t2);line-height:1.6;margin-bottom:8px">构建支持图文混合检索的RAG系统，集成OCR+视觉模型，输出可部署的Docker方案。</div><div style="display:flex;gap:5px;margin-bottom:10px"><span class="ch">#RAG</span><span class="ch">#多模态</span><span class="ch">#OCR</span></div><div style="display:flex;justify-content:space-between;align-items:center"><div style="display:flex;align-items:center;gap:5px"><div class="av" style="width:22px;height:22px;background:var(--bg4);font-size:9px;color:var(--t3)">M</div><span style="font-size:10px;color:var(--t3)">某医疗科技公司</span></div><button class="bt bo" style="font-size:11px;padding:6px 14px">认领任务</button></div></div>
+    <div class="C" data-cat="contract high" onclick="openTaskDetail(0)" style="cursor:pointer">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <div style="display:flex;align-items:center;gap:5px">
+          <span class="tg" style="background:var(--pud);color:var(--pu)">🔗 智能合约</span>
+          <span style="font-size:10px;color:var(--t3)">⏰ 21天</span>
+        </div>
+        <div style="font-size:18px;font-weight:900;color:var(--gd)">$3,500 <span style="font-size:9px;color:var(--t3)">USDC</span></div>
+      </div>
+      <div style="font-size:15px;font-weight:800;margin-bottom:4px">任务池智能合约开发 (Solidity)</div>
+      <div style="font-size:11px;color:var(--t2);line-height:1.5;margin-bottom:8px">开发链上Escrow托管合约：任务发布→资金锁定→交付验收→自动释放。支持争议仲裁和多签治理。</div>
+      <div style="display:flex;gap:5px;margin-bottom:10px"><span class="ch">#Solidity</span><span class="ch">#ERC-20</span><span class="ch">#多签</span></div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div style="display:flex;align-items:center;gap:6px">
+          <div class="av" style="width:24px;height:24px;background:var(--bg4);font-size:9px;color:var(--t3)">O</div>
+          <div><div style="font-size:10px;font-weight:600">OPENCAIO 官方</div><div style="font-size:9px;color:var(--cy)">⭐ 信誉 99</div></div>
+        </div>
+        <div class="escrow-badge">🔒 Escrow托管</div>
+      </div>
+    </div>
 
-<div class="C" style="border-color:rgba(139,92,246,.3)"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><div style="display:flex;align-items:center;gap:5px"><span class="tg" style="background:rgba(139,92,246,.2);color:#8B5CF6">🔗 智能合约</span><span style="font-size:10px;color:var(--t3)">周期:21天</span></div><div style="font-size:17px;font-weight:800;color:#8B5CF6">¥35,000</div></div><div style="font-size:15px;font-weight:700;margin-bottom:5px">任务池智能合约开发 (Solidity)</div><div style="font-size:11px;color:var(--t2);line-height:1.6;margin-bottom:8px">为蓝血菁英任务池开发链上托管合约：任务发布→资金锁定→交付验收→自动释放。支持争议仲裁和多签治理。</div><div style="display:flex;gap:5px;margin-bottom:10px"><span class="ch">#Solidity</span><span class="ch">#ERC-20</span><span class="ch">#多签</span></div><div style="display:flex;justify-content:space-between;align-items:center"><div style="display:flex;align-items:center;gap:5px"><div class="av" style="width:22px;height:22px;background:var(--bg4);font-size:9px;color:var(--t3)">O</div><span style="font-size:10px;color:var(--t3)">OPENCAIO 官方</span></div><button class="bt bo" style="font-size:11px;padding:6px 14px;border-color:#8B5CF6;color:#8B5CF6">认领任务</button></div></div>
+    <div class="C" data-cat="deploy" onclick="openTaskDetail(1)" style="cursor:pointer">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <div style="display:flex;align-items:center;gap:5px">
+          <span class="tg" style="background:var(--bld);color:var(--bll)">🖥 本地化部署</span>
+          <span style="font-size:10px;color:var(--t3)">⏰ 15天</span>
+        </div>
+        <div style="font-size:18px;font-weight:900;color:var(--gd)">$1,700 <span style="font-size:9px;color:var(--t3)">USDC</span></div>
+      </div>
+      <div style="font-size:15px;font-weight:800;margin-bottom:4px">企业知识库本地化部署 (Llama-3)</div>
+      <div style="font-size:11px;color:var(--t2);line-height:1.5;margin-bottom:8px">在私有服务器部署Llama-3-70B模型，完成RAG知识库对接，确保数据不出内网。</div>
+      <div style="display:flex;gap:5px;margin-bottom:10px"><span class="ch">#Llama3</span><span class="ch">#Docker</span><span class="ch">#RAG</span></div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div style="display:flex;align-items:center;gap:6px">
+          <div class="av" style="width:24px;height:24px;background:var(--bg4);font-size:9px;color:var(--t3)">中</div>
+          <div><div style="font-size:10px;font-weight:600">中科院背景实验室</div><div style="font-size:9px;color:var(--cy)">⭐ 信誉 95</div></div>
+        </div>
+        <div class="escrow-badge">🔒 Escrow托管</div>
+      </div>
+    </div>
 
-<div class="C"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><div style="display:flex;align-items:center;gap:5px"><span class="tg" style="background:var(--cyd);color:var(--cy)">短期实战</span><span style="font-size:10px;color:var(--t3)">周期:7天</span></div><div style="font-size:17px;font-weight:800;color:var(--bl)">¥5,000</div></div><div style="font-size:15px;font-weight:700;margin-bottom:5px">Dify 工作流自动化搭建</div><div style="font-size:11px;color:var(--t2);line-height:1.6;margin-bottom:8px">为电商团队搭建Dify自动化客服+内容生成工作流，对接企业微信API。</div><div style="display:flex;gap:5px;margin-bottom:10px"><span class="ch">#Dify</span><span class="ch">#Agent</span><span class="ch">#企微</span></div><div style="display:flex;justify-content:space-between;align-items:center"><div style="display:flex;align-items:center;gap:5px"><div class="av" style="width:22px;height:22px;background:var(--bg4);font-size:9px;color:var(--t3)">D</div><span style="font-size:10px;color:var(--t3)">某跨境电商</span></div><button class="bt bo" style="font-size:11px;padding:6px 14px">认领任务</button></div></div>
+    <div class="C" data-cat="high" onclick="openTaskDetail(2)" style="cursor:pointer">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <div style="display:flex;align-items:center;gap:5px">
+          <span class="tg" style="background:var(--gdd);color:var(--gd)">💰 高悬赏</span>
+          <span style="font-size:10px;color:var(--t3)">⏰ 30天</span>
+        </div>
+        <div style="font-size:18px;font-weight:900;color:var(--gd)">$3,500 <span style="font-size:9px;color:var(--t3)">USDC</span></div>
+      </div>
+      <div style="font-size:15px;font-weight:800;margin-bottom:4px">多模态 RAG 系统开发</div>
+      <div style="font-size:11px;color:var(--t2);line-height:1.5;margin-bottom:8px">构建支持图文混合检索的RAG系统，集成OCR+视觉模型，输出Docker部署方案。</div>
+      <div style="display:flex;gap:5px;margin-bottom:10px"><span class="ch">#RAG</span><span class="ch">#多模态</span><span class="ch">#OCR</span></div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div style="display:flex;align-items:center;gap:6px">
+          <div class="av" style="width:24px;height:24px;background:var(--bg4);font-size:9px;color:var(--t3)">M</div>
+          <div><div style="font-size:10px;font-weight:600">某医疗科技公司</div><div style="font-size:9px;color:var(--cy)">⭐ 信誉 88</div></div>
+        </div>
+        <div class="escrow-badge">🔒 Escrow托管</div>
+      </div>
+    </div>
+
+    <div class="C" data-cat="short agent" onclick="openTaskDetail(3)" style="cursor:pointer">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <div style="display:flex;align-items:center;gap:5px">
+          <span class="tg" style="background:var(--cyd);color:var(--cy)">⚡ 短期实战</span>
+          <span style="font-size:10px;color:var(--t3)">⏰ 7天</span>
+        </div>
+        <div style="font-size:18px;font-weight:900;color:var(--gd)">$700 <span style="font-size:9px;color:var(--t3)">USDC</span></div>
+      </div>
+      <div style="font-size:15px;font-weight:800;margin-bottom:4px">Dify 工作流自动化搭建</div>
+      <div style="font-size:11px;color:var(--t2);line-height:1.5;margin-bottom:8px">为电商团队搭建Dify自动化客服+内容生成工作流，对接企业微信API。</div>
+      <div style="display:flex;gap:5px;margin-bottom:10px"><span class="ch">#Dify</span><span class="ch">#Agent</span><span class="ch">#企微</span></div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div style="display:flex;align-items:center;gap:6px">
+          <div class="av" style="width:24px;height:24px;background:var(--bg4);font-size:9px;color:var(--t3)">D</div>
+          <div><div style="font-size:10px;font-weight:600">某跨境电商</div><div style="font-size:9px;color:var(--cy)">⭐ 信誉 82</div></div>
+        </div>
+        <div class="escrow-badge">🔒 Escrow托管</div>
+      </div>
+    </div>
+
+    <div class="C" data-cat="high" onclick="openTaskDetail(4)" style="cursor:pointer">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <div style="display:flex;align-items:center;gap:5px">
+          <span class="tg" style="background:var(--pud);color:var(--pu)">🤖 AI模型</span>
+          <span style="font-size:10px;color:var(--t3)">⏰ 60天</span>
+        </div>
+        <div style="font-size:18px;font-weight:900;color:var(--gd)">$7,000 <span style="font-size:9px;color:var(--t3)">USDC</span></div>
+      </div>
+      <div style="font-size:15px;font-weight:800;margin-bottom:4px">CAIO 首席AI官候选人内推</div>
+      <div style="font-size:11px;color:var(--t2);line-height:1.5;margin-bottom:8px">为某独角兽企业寻访首席AI官，需具备全栈AI架构能力与商业敏锐度。</div>
+      <div style="display:flex;gap:5px;margin-bottom:10px"><span class="ch">#架构</span><span class="ch">#商业化</span><span class="ch">#AI</span></div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div style="display:flex;align-items:center;gap:6px">
+          <div class="av" style="width:24px;height:24px;background:var(--bg4);font-size:9px;color:var(--t3)">L</div>
+          <div><div style="font-size:10px;font-weight:600">蓝血俱乐部直发</div><div style="font-size:9px;color:var(--cy)">⭐ 信誉 99</div></div>
+        </div>
+        <div class="escrow-badge">🔒 Escrow托管</div>
+      </div>
+    </div>
+
+  </div>
 </div>
 
-<!-- ===================== 我的 ===================== -->
+<!-- ============================================================ -->
+<!-- TAB 3: 我的 (Profile)                                         -->
+<!-- ============================================================ -->
 <div class="P" id="p3">
-<div style="width:calc(100% + 32px);margin:0 -16px;height:150px;background:linear-gradient(135deg,#2a1a3a,#1a2a4a,#3a1a2a);position:relative">
-<div style="position:absolute;top:10px;right:16px;width:34px;height:34px;border-radius:50%;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;font-size:15px">📷</div>
-<div style="position:absolute;bottom:-36px;left:50%;transform:translateX(-50%)"><div class="av" style="width:72px;height:72px;background:linear-gradient(135deg,#4ECDC4,#556270);font-size:28px;color:#fff;border:3px solid var(--bg)">艾</div><div style="position:absolute;bottom:2px;right:-4px;width:24px;height:24px;border-radius:50%;background:var(--go);display:flex;align-items:center;justify-content:center;font-size:12px;border:2px solid var(--bg)">👑</div></div>
-</div>
-<div style="text-align:center;margin-top:44px;margin-bottom:14px">
-<div style="font-size:17px;font-weight:800">李艾米</div>
-<div style="font-size:10.5px;color:var(--t2);margin-top:2px">北京理工大学 · 量化金融</div>
-<div style="display:flex;justify-content:center;gap:8px;margin-top:10px"><button class="bt bo" style="font-size:11px;padding:7px 16px">发起小组</button><div style="width:34px;height:34px;border-radius:50%;background:var(--bg3);border:1px solid var(--bd);display:flex;align-items:center;justify-content:center;font-size:13px">↗</div></div>
-</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
-<div class="C" style="padding:16px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><span style="font-size:10.5px;color:var(--t3)">我的钱包</span><span style="font-size:13px">💳</span></div><div style="font-size:24px;font-weight:800">¥12800</div><div style="font-size:10.5px;color:var(--bl);margin-top:3px">立即提现 →</div></div>
-<div class="C" style="padding:16px"><div style="font-size:10.5px;color:var(--t3);margin-bottom:4px">成长等级</div><div style="font-size:24px;font-weight:800;color:var(--go)">钻石</div><div class="pb" style="margin-top:5px;height:4px;background:rgba(245,166,35,.15)"><div style="width:75%;background:var(--go);height:100%;border-radius:3px"></div></div></div>
-</div>
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><div style="font-size:13px;font-weight:700">等级特权</div><div style="font-size:10.5px;color:var(--bl)">查看全部</div></div>
-<div class="C"><div style="display:flex;align-items:center;gap:10px"><div style="width:38px;height:38px;border-radius:10px;background:var(--bld);display:flex;align-items:center;justify-content:center;font-size:16px">⚡</div><div><div style="font-size:12.5px;font-weight:600">当前核心权益</div><div style="font-size:10.5px;color:var(--t3)">免提现手续费</div></div></div></div>
+  <!-- Profile Header -->
+  <div style="width:calc(100% + 32px);margin:0 -16px;height:140px;background:linear-gradient(135deg,#1a1a3a,#1E3A8A,#2a1a3a);position:relative">
+    <div style="position:absolute;top:12px;right:16px;display:flex;gap:8px">
+      <div style="width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;font-size:13px">⚙</div>
+    </div>
+    <div style="position:absolute;bottom:-34px;left:50%;transform:translateX(-50%)">
+      <div class="av" style="width:68px;height:68px;background:linear-gradient(135deg,#4ECDC4,#556270);font-size:26px;color:#fff;border:3px solid var(--bg)">艾</div>
+      <div style="position:absolute;bottom:2px;right:-4px;width:22px;height:22px;border-radius:50%;background:var(--gg);display:flex;align-items:center;justify-content:center;font-size:11px;border:2px solid var(--bg)">👑</div>
+    </div>
+  </div>
 
-<div style="font-size:13px;font-weight:700;margin-bottom:8px">最近实战成果</div>
-<div class="C"><div style="display:flex;align-items:center;gap:10px"><div style="width:38px;height:38px;border-radius:10px;background:var(--bg4);display:flex;align-items:center;justify-content:center;font-size:16px">🔧</div><div style="flex:1"><div style="font-size:12.5px;font-weight:600">Llama本地化方案</div><div style="font-size:10px;color:var(--t3)">交付于 2024-02 · 满意度 5.0</div></div><div style="font-size:13px;font-weight:700;color:var(--cy)">+¥8,000</div></div></div>
-<div class="C"><div style="display:flex;align-items:center;gap:10px"><div style="width:38px;height:38px;border-radius:10px;background:var(--bg4);display:flex;align-items:center;justify-content:center;font-size:16px">🧠</div><div style="flex:1"><div style="font-size:12.5px;font-weight:600">企业RAG系统搭建</div><div style="font-size:10px;color:var(--t3)">交付于 2024-01 · 满意度 4.8</div></div><div style="font-size:13px;font-weight:700;color:var(--cy)">+¥4,800</div></div></div>
+  <div style="text-align:center;margin-top:42px;margin-bottom:14px">
+    <div style="font-size:18px;font-weight:900">李艾米</div>
+    <div style="font-size:11px;color:var(--t2);margin-top:2px">北京理工大学 · 量化金融 · <span class="verified">✓ VERIFIED</span></div>
+    <div style="display:flex;justify-content:center;gap:8px;margin-top:10px">
+      <button class="bt bo bsm">发起小组</button>
+      <button class="bt bp bsm">分享主页</button>
+    </div>
+  </div>
 
-<div style="font-size:13px;font-weight:700;margin:14px 0 8px">🔗 链上成就 (智能合约)</div>
-<div class="C" style="border-color:rgba(139,92,246,.25)">
-<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><div style="width:38px;height:38px;border-radius:10px;background:rgba(139,92,246,.12);display:flex;align-items:center;justify-content:center;font-size:16px">⛓</div><div><div style="font-size:12.5px;font-weight:600">链上信誉分</div><div style="font-size:10px;color:var(--t3)">Base链 · 不可篡改的实战履历</div></div></div>
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;text-align:center">
-<div style="padding:8px;background:var(--bg);border-radius:8px"><div style="font-size:16px;font-weight:800;color:#8B5CF6">98</div><div style="font-size:9px;color:var(--t3)">信誉分</div></div>
-<div style="padding:8px;background:var(--bg);border-radius:8px"><div style="font-size:16px;font-weight:800;color:var(--cy)">5</div><div style="font-size:9px;color:var(--t3)">链上任务</div></div>
-<div style="padding:8px;background:var(--bg);border-radius:8px"><div style="font-size:16px;font-weight:800;color:var(--go)">3</div><div style="font-size:9px;color:var(--t3)">NFT徽章</div></div>
-</div>
-</div>
-<div style="text-align:center;margin-top:14px;font-size:9px;color:var(--t4)">蓝血菁英 v2.0 · OPENCAIO 出品</div>
+  <!-- Wallet & Level -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+    <div class="C" style="padding:14px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <span style="font-size:10px;color:var(--t3)">💰 钱包余额</span>
+      </div>
+      <div style="font-size:22px;font-weight:900;color:var(--gd)">$1,820</div>
+      <div style="font-size:9px;color:var(--t3);margin-top:1px">≈ 1,820 USDC</div>
+      <div style="font-size:10px;color:var(--bl);margin-top:6px;font-weight:600">提现 →</div>
+    </div>
+    <div class="C" style="padding:14px">
+      <div style="font-size:10px;color:var(--t3);margin-bottom:6px">⭐ 成长等级</div>
+      <div style="font-size:22px;font-weight:900;color:var(--gd)" class="glow-gold">钻石</div>
+      <div style="font-size:9px;color:var(--t3);margin-top:1px">Lv.4 · 3,420 / 5,000</div>
+      <div class="pb" style="margin-top:6px;height:4px;background:rgba(212,168,67,.15)"><div style="width:68%;background:var(--gg);height:100%;border-radius:3px"></div></div>
+    </div>
+  </div>
+
+  <!-- On-Chain Resume (SBT) -->
+  <div class="stl">⛓ 链上履历</div>
+  <div class="sbt-card">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+      <div style="width:40px;height:40px;border-radius:12px;background:var(--pud);display:flex;align-items:center;justify-content:center;font-size:18px">⛓</div>
+      <div>
+        <div style="font-size:13px;font-weight:800">信誉 SBT 等级</div>
+        <div style="font-size:10px;color:var(--t3)">Base链 · 不可篡改</div>
+      </div>
+      <div style="margin-left:auto;text-align:right">
+        <div style="font-size:22px;font-weight:900;color:var(--pu)">精英</div>
+        <div style="font-size:9px;color:var(--t3)">信誉分 78/100</div>
+      </div>
+    </div>
+    <div class="stat-grid">
+      <div class="stat-box"><div class="stat-val" style="color:var(--cy)">8</div><div class="stat-lbl">链上任务</div></div>
+      <div class="stat-box"><div class="stat-val" style="color:var(--gd)">4.9</div><div class="stat-lbl">平均评分</div></div>
+      <div class="stat-box"><div class="stat-val" style="color:var(--bl)">3</div><div class="stat-lbl">NFT徽章</div></div>
+    </div>
+  </div>
+
+  <!-- NFT Achievement Badge Wall -->
+  <div class="stl">🏆 NFT 成就徽章</div>
+  <div class="nft-grid" style="margin-bottom:14px">
+    <div class="nft-item"><span class="nft-icon">🥇</span><div class="nft-name">黑客松冠军</div><div class="nft-rare">★ 传说</div></div>
+    <div class="nft-item"><span class="nft-icon">🔥</span><div class="nft-name">Top 贡献者</div><div class="nft-rare">★ 史诗</div></div>
+    <div class="nft-item"><span class="nft-icon">💎</span><div class="nft-name">钻石精英</div><div class="nft-rare">★ 稀有</div></div>
+    <div class="nft-item" style="opacity:.4"><span class="nft-icon">🔒</span><div class="nft-name">首笔$10k</div><div class="nft-rare" style="color:var(--t4)">未解锁</div></div>
+    <div class="nft-item" style="opacity:.4"><span class="nft-icon">🔒</span><div class="nft-name">导师认证</div><div class="nft-rare" style="color:var(--t4)">未解锁</div></div>
+    <div class="nft-item" style="opacity:.4"><span class="nft-icon">🔒</span><div class="nft-name">社区KOL</div><div class="nft-rare" style="color:var(--t4)">未解锁</div></div>
+  </div>
+
+  <!-- Active Tasks -->
+  <div class="stl">🔄 进行中的任务</div>
+  <div class="active-task">
+    <div style="width:40px;height:40px;border-radius:10px;background:var(--pud);display:flex;align-items:center;justify-content:center;font-size:16px">🔗</div>
+    <div style="flex:1">
+      <div style="font-size:12px;font-weight:700">任务池智能合约开发</div>
+      <div style="font-size:10px;color:var(--t3)">进度 2/3 里程碑 · 截止 4/15</div>
+      <div class="pb" style="margin-top:4px"><div style="width:66%;background:var(--gp)"></div></div>
+    </div>
+    <div style="font-size:12px;font-weight:800;color:var(--gd)">$1,050</div>
+  </div>
+  <div class="active-task">
+    <div style="width:40px;height:40px;border-radius:10px;background:var(--bld);display:flex;align-items:center;justify-content:center;font-size:16px">🖥</div>
+    <div style="flex:1">
+      <div style="font-size:12px;font-weight:700">企业知识库本地化部署</div>
+      <div style="font-size:10px;color:var(--t3)">进度 1/2 里程碑 · 截止 4/20</div>
+      <div class="pb" style="margin-top:4px"><div style="width:40%;background:var(--gb)"></div></div>
+    </div>
+    <div style="font-size:12px;font-weight:800;color:var(--gd)">$510</div>
+  </div>
+
+  <!-- Recent Achievements -->
+  <div class="stl" style="margin-top:4px">📋 最近实战成果</div>
+  <div class="C"><div style="display:flex;align-items:center;gap:10px"><div style="width:36px;height:36px;border-radius:10px;background:var(--bg4);display:flex;align-items:center;justify-content:center;font-size:14px">🔧</div><div style="flex:1"><div style="font-size:12px;font-weight:700">Llama本地化方案</div><div style="font-size:10px;color:var(--t3)">2026-02 · ⭐ 5.0</div></div><div style="font-size:13px;font-weight:800;color:var(--cy)">+$1,100</div></div></div>
+  <div class="C"><div style="display:flex;align-items:center;gap:10px"><div style="width:36px;height:36px;border-radius:10px;background:var(--bg4);display:flex;align-items:center;justify-content:center;font-size:14px">🧠</div><div style="flex:1"><div style="font-size:12px;font-weight:700">企业RAG系统搭建</div><div style="font-size:10px;color:var(--t3)">2026-01 · ⭐ 4.8</div></div><div style="font-size:13px;font-weight:800;color:var(--cy)">+$680</div></div></div>
+
+  <div style="text-align:center;margin-top:16px;padding:8px;font-size:9px;color:var(--t4)">Blue Blood Elite v3.2 · Powered by OPENCAIO</div>
 </div>
 
-<!-- ===================== 精英详情 ===================== -->
+<!-- ============================================================ -->
+<!-- SUB-PAGE: Elite Detail                                        -->
+<!-- ============================================================ -->
 <div class="P" id="p5">
-<div style="padding:14px 0 10px;display:flex;align-items:center;gap:8px"><div style="cursor:pointer;font-size:16px" onclick="G(0)">←</div><div style="font-size:15px;font-weight:700">精英详情</div></div>
-<div class="C" style="text-align:center;padding:20px;background:linear-gradient(135deg,rgba(245,166,35,.06),rgba(255,107,107,.04))">
-<div class="av" style="width:66px;height:66px;margin:0 auto 8px;background:linear-gradient(135deg,#F5A623,#FF6B6B);font-size:26px;color:#fff">云</div>
-<div style="font-size:17px;font-weight:800">张云飞</div>
-<div style="font-size:10.5px;color:var(--t2);margin-top:2px">人工智能 · 清华大学 · <span style="color:var(--bl);font-weight:700">VERIFIED</span></div>
-<div style="margin-top:6px;display:flex;justify-content:center;gap:4px;flex-wrap:wrap"><span class="ch">Python</span><span class="ch">NLP</span><span class="ch">模型训练</span><span class="ch">LLM</span></div>
-<div style="margin-top:12px;display:flex;justify-content:center;gap:8px"><button class="bt bp" style="font-size:11px;padding:8px 16px">🤝 建立连接</button><button class="bt bo" style="font-size:11px;padding:8px 16px">💬 发消息</button></div>
-</div>
-<div class="C"><div style="font-size:13px;font-weight:700;margin-bottom:6px">📋 个人简介</div><div style="font-size:11.5px;color:var(--t2);line-height:1.7">清华大学计算机博士，NLP与大模型优化方向。顶会论文12篇，开源项目2k+ Stars。曾任字节跳动AI Lab高级研究员，现专注企业级LLM落地和Agent系统开发。</div></div>
-<div class="C"><div style="font-size:13px;font-weight:700;margin-bottom:6px">🏆 成就徽章</div><div style="display:flex;gap:8px;flex-wrap:wrap"><div style="text-align:center;padding:8px;background:var(--bg);border-radius:10px;min-width:60px"><div style="font-size:20px">🥇</div><div style="font-size:8.5px;color:var(--t3);margin-top:2px">黑客松冠军</div></div><div style="text-align:center;padding:8px;background:var(--bg);border-radius:10px;min-width:60px"><div style="font-size:20px">⭐</div><div style="font-size:8.5px;color:var(--t3);margin-top:2px">开源之星</div></div><div style="text-align:center;padding:8px;background:var(--bg);border-radius:10px;min-width:60px"><div style="font-size:20px">🔥</div><div style="font-size:8.5px;color:var(--t3);margin-top:2px">Top贡献者</div></div></div></div>
-<div class="C"><div style="font-size:13px;font-weight:700;margin-bottom:8px">📊 技能雷达</div><div style="display:flex;flex-direction:column;gap:5px"><div><div style="display:flex;justify-content:space-between;font-size:10.5px;margin-bottom:2px"><span>Python / PyTorch</span><span style="color:var(--cy)">98%</span></div><div class="pb"><div style="width:98%;background:var(--gd)"></div></div></div><div><div style="display:flex;justify-content:space-between;font-size:10.5px;margin-bottom:2px"><span>NLP / Transformers</span><span style="color:var(--cy)">95%</span></div><div class="pb"><div style="width:95%;background:var(--gd)"></div></div></div><div><div style="display:flex;justify-content:space-between;font-size:10.5px;margin-bottom:2px"><span>LLM Fine-tuning</span><span style="color:var(--cy)">92%</span></div><div class="pb"><div style="width:92%;background:var(--gd)"></div></div></div><div><div style="display:flex;justify-content:space-between;font-size:10.5px;margin-bottom:2px"><span>RAG / Vector DB</span><span style="color:var(--bl)">88%</span></div><div class="pb"><div style="width:88%;background:var(--bl)"></div></div></div></div></div>
-</div>
-
-<!-- ===================== 课程详情 ===================== -->
-<div class="P" id="p6">
-<div style="padding:14px 0 10px;display:flex;align-items:center;gap:8px"><div style="cursor:pointer;font-size:16px" onclick="G(1)">←</div><div style="font-size:15px;font-weight:700">课程详情</div></div>
-<div class="bn" style="aspect-ratio:2.3/1"><div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center"><div style="font-size:38px;margin-bottom:8px">💻</div><div style="font-size:17px;font-weight:800">本地化部署架构实战</div><div style="font-size:11px;color:var(--t2);margin-top:3px">中级 · 12课时 · 342人学习</div></div></div>
-<div class="C"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><div style="font-size:13px;font-weight:700">📖 课程大纲</div><span class="tg" style="background:var(--bl);color:#fff">12课时</span></div>
-<div style="display:flex;flex-direction:column;gap:5px">
-<div style="display:flex;align-items:center;gap:7px;padding:9px;background:var(--bg);border-radius:8px"><div style="width:22px;height:22px;border-radius:50%;background:var(--bl);color:#fff;font-size:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0">1</div><div style="flex:1;font-size:11.5px">大模型本地化部署概览</div><div style="font-size:9.5px;color:var(--t3)">45min</div></div>
-<div style="display:flex;align-items:center;gap:7px;padding:9px;background:var(--bg);border-radius:8px"><div style="width:22px;height:22px;border-radius:50%;background:var(--bl);color:#fff;font-size:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0">2</div><div style="flex:1;font-size:11.5px">Ollama + Open WebUI 实操</div><div style="font-size:9.5px;color:var(--t3)">60min</div></div>
-<div style="display:flex;align-items:center;gap:7px;padding:9px;background:var(--bg);border-radius:8px"><div style="width:22px;height:22px;border-radius:50%;background:var(--bl);color:#fff;font-size:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0">3</div><div style="flex:1;font-size:11.5px">vLLM 推理优化与量化</div><div style="font-size:9.5px;color:var(--t3)">55min</div></div>
-<div style="display:flex;align-items:center;gap:7px;padding:9px;background:var(--bg);border-radius:8px"><div style="width:22px;height:22px;border-radius:50%;background:var(--t4);color:var(--t3);font-size:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0">4</div><div style="flex:1;font-size:11.5px;color:var(--t3)">企业级 API Gateway 搭建</div><div style="font-size:9.5px;color:var(--t3)">🔒</div></div>
-<div style="display:flex;align-items:center;gap:7px;padding:9px;background:var(--bg);border-radius:8px"><div style="width:22px;height:22px;border-radius:50%;background:var(--t4);color:var(--t3);font-size:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0">5</div><div style="flex:1;font-size:11.5px;color:var(--t3)">RAG 管线与知识库集成</div><div style="font-size:9.5px;color:var(--t3)">🔒</div></div>
-</div></div>
-<button class="bt bp bf" style="margin-bottom:12px">🎓 开始学习（免费前3课）</button>
+  <div style="padding:14px 0 10px;display:flex;align-items:center;gap:8px"><div style="cursor:pointer;font-size:18px;color:var(--t2)" onclick="G(0)">←</div><div style="font-size:15px;font-weight:800">精英详情</div></div>
+  <div class="C" style="text-align:center;padding:20px;background:linear-gradient(135deg,rgba(212,168,67,.06),rgba(255,107,107,.03))">
+    <div class="av" style="width:64px;height:64px;margin:0 auto 8px;background:linear-gradient(135deg,#F5A623,#FF6B6B);font-size:24px;color:#fff">云</div>
+    <div style="font-size:18px;font-weight:900">张云飞</div>
+    <div style="font-size:10px;color:var(--t2);margin-top:2px">AI · 清华大学 · <span class="verified">✓ VERIFIED</span></div>
+    <div style="margin-top:8px;display:flex;justify-content:center;gap:4px;flex-wrap:wrap"><span class="ch">Python</span><span class="ch">NLP</span><span class="ch">LLM</span><span class="ch">PyTorch</span></div>
+    <div style="margin-top:12px;display:flex;justify-content:center;gap:8px"><button class="bt bp bsm">🤝 建立连接</button><button class="bt bo bsm">💬 发消息</button></div>
+  </div>
+  <div class="C"><div style="font-size:13px;font-weight:800;margin-bottom:6px">📋 个人简介</div><div style="font-size:11px;color:var(--t2);line-height:1.7">清华大学计算机博士，NLP与大模型优化方向。顶会论文12篇，开源项目2k+ Stars。曾任字节跳动AI Lab高级研究员，现专注企业级LLM落地和Agent系统开发。</div></div>
+  <div class="C">
+    <div style="font-size:13px;font-weight:800;margin-bottom:8px">🏆 成就徽章</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <div style="text-align:center;padding:8px;background:var(--bg);border-radius:10px;min-width:60px"><div style="font-size:20px">🥇</div><div style="font-size:8px;color:var(--t3);margin-top:2px">黑客松冠军</div></div>
+      <div style="text-align:center;padding:8px;background:var(--bg);border-radius:10px;min-width:60px"><div style="font-size:20px">⭐</div><div style="font-size:8px;color:var(--t3);margin-top:2px">开源之星</div></div>
+      <div style="text-align:center;padding:8px;background:var(--bg);border-radius:10px;min-width:60px"><div style="font-size:20px">🔥</div><div style="font-size:8px;color:var(--t3);margin-top:2px">Top贡献者</div></div>
+    </div>
+  </div>
+  <div class="C">
+    <div style="font-size:13px;font-weight:800;margin-bottom:8px">📊 技能雷达</div>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <div><div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:2px"><span>Python / PyTorch</span><span style="color:var(--cy)">98%</span></div><div class="pb"><div style="width:98%;background:var(--gc)"></div></div></div>
+      <div><div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:2px"><span>NLP / Transformers</span><span style="color:var(--cy)">95%</span></div><div class="pb"><div style="width:95%;background:var(--gc)"></div></div></div>
+      <div><div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:2px"><span>LLM Fine-tuning</span><span style="color:var(--bl)">92%</span></div><div class="pb"><div style="width:92%;background:var(--gb)"></div></div></div>
+      <div><div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:2px"><span>RAG / Vector DB</span><span style="color:var(--bl)">88%</span></div><div class="pb"><div style="width:88%;background:var(--gb)"></div></div></div>
+    </div>
+  </div>
 </div>
 
 </div><!-- end #M -->
 
 <!-- Tab Bar -->
 <div class="T">
-<div class="a" onclick="G(0)"><span>🔍</span><span>发现</span></div>
-<div onclick="G(1)"><span>⚡</span><span>成长</span></div>
-<div onclick="G(2)"><span>🏛</span><span>任务</span></div>
-<div onclick="G(3)"><span>👤</span><span>我的</span></div>
+  <div class="a" onclick="G(0)"><span class="ti">🔍</span><span class="tl">发现</span></div>
+  <div onclick="G(1)"><span class="ti">⚡</span><span class="tl">成长</span></div>
+  <div onclick="G(2)"><span class="ti">🏛</span><span class="tl">任务</span></div>
+  <div onclick="G(3)"><span class="ti">👤</span><span class="tl">我的</span></div>
 </div>
+
+<!-- ============================================================ -->
+<!-- MODAL: Task Detail                                            -->
+<!-- ============================================================ -->
+<div class="modal-overlay" id="taskDetailModal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <h3>任务详情</h3>
+      <div class="modal-close" onclick="closeModal('taskDetailModal')">✕</div>
+    </div>
+    <div class="modal-body" id="taskDetailBody">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MODAL: Create Task                                            -->
+<!-- ============================================================ -->
+<div class="modal-overlay" id="createTaskModal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <h3>📝 发布任务</h3>
+      <div class="modal-close" onclick="closeModal('createTaskModal')">✕</div>
+    </div>
+    <div class="modal-body">
+      <div style="margin-bottom:12px;padding:12px;background:var(--cyd);border:1px solid rgba(6,214,160,.2);border-radius:var(--rm)">
+        <div style="font-size:11px;font-weight:700;color:var(--cy)">🔒 资金将通过智能合约 Escrow 托管</div>
+        <div style="font-size:10px;color:var(--t3);margin-top:2px">发布即锁定USDC，验收通过自动释放，保障双方权益</div>
+      </div>
+      <label class="fl">任务标题 *</label>
+      <input class="fi" placeholder="例如：企业知识库本地化部署">
+      <label class="fl">任务描述 *</label>
+      <textarea class="fi" placeholder="详细描述任务需求、交付标准、技术要求…"></textarea>
+      <label class="fl">赏金 (USDC) *</label>
+      <input class="fi" type="number" placeholder="例如：3500">
+      <label class="fl">任务周期</label>
+      <div style="display:flex;gap:8px;margin-bottom:10px">
+        <div style="flex:1;padding:8px;text-align:center;border:1px solid var(--bd);border-radius:var(--rm);font-size:11px;cursor:pointer;color:var(--t2)">7天</div>
+        <div style="flex:1;padding:8px;text-align:center;border:1px solid var(--bl);border-radius:var(--rm);font-size:11px;cursor:pointer;background:var(--bld);color:var(--bl);font-weight:700">15天</div>
+        <div style="flex:1;padding:8px;text-align:center;border:1px solid var(--bd);border-radius:var(--rm);font-size:11px;cursor:pointer;color:var(--t2)">30天</div>
+        <div style="flex:1;padding:8px;text-align:center;border:1px solid var(--bd);border-radius:var(--rm);font-size:11px;cursor:pointer;color:var(--t2)">60天</div>
+      </div>
+      <label class="fl">里程碑拆分</label>
+      <div style="margin-bottom:10px">
+        <div style="display:flex;gap:6px;align-items:center;margin-bottom:6px">
+          <div style="width:8px;height:8px;border-radius:50%;background:var(--bl)"></div>
+          <input class="fi" style="flex:1;margin-bottom:0" placeholder="里程碑1：启动阶段" value="启动阶段（30%资金释放）">
+        </div>
+        <div style="display:flex;gap:6px;align-items:center;margin-bottom:6px">
+          <div style="width:8px;height:8px;border-radius:50%;background:var(--gd)"></div>
+          <input class="fi" style="flex:1;margin-bottom:0" placeholder="里程碑2：中期交付" value="中期交付（40%资金释放）">
+        </div>
+        <div style="display:flex;gap:6px;align-items:center">
+          <div style="width:8px;height:8px;border-radius:50%;background:var(--cy)"></div>
+          <input class="fi" style="flex:1;margin-bottom:0" placeholder="里程碑3：验收完成" value="验收完成（30%资金释放）">
+        </div>
+      </div>
+      <label class="fl">技能要求</label>
+      <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:14px">
+        <span class="ch" style="border-color:var(--bl);color:var(--bl)">✕ Solidity</span>
+        <span class="ch" style="border-color:var(--bl);color:var(--bl)">✕ ERC-20</span>
+        <span class="ch" style="border-color:var(--bl);color:var(--bl)">✕ 多签</span>
+        <span class="ch" style="border-color:var(--t4);color:var(--t3)">＋ 添加技能</span>
+      </div>
+      <button class="bt bps bf" style="padding:14px">🔒 发布任务（Escrow托管）</button>
+    </div>
+  </div>
+</div>
+
 </div><!-- end app -->
 
 <script>
+// ===== Mock Data =====
+var tasks = [
+  {
+    title:'任务池智能合约开发 (Solidity)',
+    cat:'contract',
+    reward:'$3,500 USDC',
+    desc:'为蓝血菁英任务池开发链上托管合约：任务发布→资金锁定→交付验收→自动释放。支持争议仲裁和多签治理。',
+    publisher:'OPENCAIO 官方',
+    pubAvatar:'O',
+    pubRep:99,
+    deadline:'21天',
+    skills:['Solidity','ERC-20','多签合约','OpenZeppelin'],
+    milestones:[
+      {name:'合约架构设计 + 接口定义',pct:30,days:5},
+      {name:'核心Escrow逻辑开发 + 测试',pct:40,days:10},
+      {name:'审计修复 + 部署上线',pct:30,days:6}
+    ]
+  },
+  {
+    title:'企业知识库本地化部署 (Llama-3)',
+    cat:'deploy',
+    reward:'$1,700 USDC',
+    desc:'在私有服务器环境部署Llama-3-70B模型，并完成RAG知识库对接，确保数据不出本地内网。要求支持并发100+请求。',
+    publisher:'中科院背景实验室',
+    pubAvatar:'中',
+    pubRep:95,
+    deadline:'15天',
+    skills:['Llama3','Docker','RAG','vLLM','Python'],
+    milestones:[
+      {name:'模型部署 + 基础推理服务',pct:40,days:7},
+      {name:'RAG知识库对接 + 性能优化',pct:60,days:8}
+    ]
+  },
+  {
+    title:'多模态 RAG 系统开发',
+    cat:'high',
+    reward:'$3,500 USDC',
+    desc:'构建支持图文混合检索的RAG系统，集成OCR+视觉模型，输出可部署的Docker方案。',
+    publisher:'某医疗科技公司',
+    pubAvatar:'M',
+    pubRep:88,
+    deadline:'30天',
+    skills:['RAG','多模态','OCR','Docker','PyTorch'],
+    milestones:[
+      {name:'系统架构设计 + OCR集成',pct:30,days:8},
+      {name:'多模态检索引擎开发',pct:40,days:14},
+      {name:'Docker打包 + 部署文档',pct:30,days:8}
+    ]
+  },
+  {
+    title:'Dify 工作流自动化搭建',
+    cat:'short',
+    reward:'$700 USDC',
+    desc:'为电商团队搭建Dify自动化客服+内容生成工作流，对接企业微信API。',
+    publisher:'某跨境电商',
+    pubAvatar:'D',
+    pubRep:82,
+    deadline:'7天',
+    skills:['Dify','Agent','企微API','Prompt Engineering'],
+    milestones:[
+      {name:'工作流搭建 + 企微对接',pct:60,days:4},
+      {name:'测试优化 + 交付',pct:40,days:3}
+    ]
+  },
+  {
+    title:'CAIO 首席AI官候选人内推',
+    cat:'high',
+    reward:'$7,000 USDC',
+    desc:'为某独角兽企业寻访首席AI官，需具备全栈AI架构能力与商业敏锐度。',
+    publisher:'蓝血俱乐部直发',
+    pubAvatar:'L',
+    pubRep:99,
+    deadline:'60天',
+    skills:['AI架构','商业化','团队管理','战略规划'],
+    milestones:[
+      {name:'候选人筛选 + 背景调查',pct:30,days:20},
+      {name:'面试评估 + 技术测试',pct:40,days:25},
+      {name:'入职对接 + 试产期',pct:30,days:15}
+    ]
+  }
+];
+
+// ===== Tab Navigation =====
 function G(n){
   document.querySelectorAll('.P').forEach(function(p){p.classList.remove('on')});
   var t=document.getElementById('p'+n);
   if(t)t.classList.add('on');
   document.getElementById('M').scrollTop=0;
   document.querySelectorAll('.T>div').forEach(function(d){d.classList.remove('a')});
-  var m=[0,1,2,3];
-  var idx=(n<=3)?n:(n===5?0:1);
+  var map={0:0,1:1,2:2,3:3,5:0,6:1};
+  var idx=map[n]!==undefined?map[n]:0;
   var tabs=document.querySelectorAll('.T>div');
   if(tabs[idx])tabs[idx].classList.add('a');
 }
+
+// ===== Growth Tab =====
 function SG(t){
   document.querySelectorAll('#gTabs>div').forEach(function(d){d.classList.remove('a')});
   var m={c:0,h:1,j:2};
@@ -235,15 +921,83 @@ function SG(t){
   document.getElementById('gc').style.display=t==='c'?'block':'none';
   document.getElementById('gh').style.display=t==='h'?'block':'none';
   document.getElementById('gj').style.display=t==='j'?'block':'none';
-  var b={c:{tag:'精品课程',ti:'零基础 AIGC 实战课程',st:'从 Prompt 到本地化部署全流程',cl:'var(--bl)'},h:{tag:'热力比赛',ti:'2024 春季黑客松',st:'赢取 CAIO 岗位内推名额',cl:'var(--rd)'},j:{tag:'精品课程',ti:'零基础 AIGC 实战课程',st:'从 Prompt 到本地化部署全流程',cl:'var(--bl)'}};
-  var d=b[t];
-  document.getElementById('bTag').textContent=d.tag;document.getElementById('bTag').style.background=d.cl;
-  document.getElementById('bTi').textContent=d.ti;document.getElementById('bSt').textContent=d.st;
 }
-function SP(el){
-  document.querySelectorAll('.pl>div').forEach(function(d){d.classList.remove('a')});
+
+// ===== Task Filter =====
+function filterTask(el,cat){
+  document.querySelectorAll('#taskPills>div').forEach(function(d){d.classList.remove('a')});
   el.classList.add('a');
+  var cards=document.querySelectorAll('#taskList .C');
+  cards.forEach(function(c){
+    if(cat==='all'){c.style.display='block';return}
+    var dc=c.getAttribute('data-cat')||'';
+    c.style.display=dc.indexOf(cat)>=0?'block':'none';
+  });
 }
+
+// ===== Task Detail Modal =====
+function openTaskDetail(idx){
+  var t=tasks[idx]||tasks[0];
+  var ms='';
+  t.milestones.forEach(function(m,i){
+    var isLast=i===t.milestones.length-1;
+    var colors=['var(--bl)','var(--gd)','var(--cy)'];
+    ms+='<div class="milestone">'+
+      '<div class="ms-dot'+(isLast?' last':'')+'" style="border-color:'+colors[i%3]+';background:'+colors[i%3]+'"></div>'+
+      '<div><div style="font-size:12px;font-weight:700">'+m.name+'</div>'+
+      '<div style="font-size:10px;color:var(--t3)">释放 '+m.pct+'% 资金 · '+m.days+'天</div></div></div>';
+  });
+  var skills='';
+  t.skills.forEach(function(s){skills+='<span class="ch">#'+s+'</span>';});
+  document.getElementById('taskDetailBody').innerHTML=
+    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">'+
+      '<span class="tg" style="background:var(--pud);color:var(--pu)">🔗 链上托管</span>'+
+      '<span style="font-size:22px;font-weight:900;color:var(--gd))">'+t.reward+'</span>'+
+    '</div>'+
+    '<div style="font-size:17px;font-weight:900;margin-bottom:6px">'+t.title+'</div>'+
+    '<div style="font-size:11px;color:var(--t2);line-height:1.6;margin-bottom:14px">'+t.desc+'</div>'+
+    '<div style="padding:12px;background:var(--cyd);border:1px solid rgba(6,214,160,.2);border-radius:var(--rm);margin-bottom:14px">'+
+      '<div style="font-size:11px;font-weight:700;color:var(--cy);margin-bottom:4px">🔒 Escrow 托管说明</div>'+
+      '<div style="font-size:10px;color:var(--t3);line-height:1.5">赏金已通过智能合约锁定在Base链上。每个里程碑完成后自动释放对应比例资金。如发生争议，触发3/5多签仲裁。资金流向可在BaseScan公开验证。</div>'+
+    '</div>'+
+    '<div style="font-size:13px;font-weight:800;margin-bottom:8px">📋 里程碑拆分</div>'+
+    '<div style="margin-bottom:14px">'+ms+'</div>'+
+    '<div style="font-size:13px;font-weight:800;margin-bottom:6px">🛠 技能要求</div>'+
+    '<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:14px">'+skills+'</div>'+
+    '<div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--bg3);border-radius:var(--rm);margin-bottom:16px">'+
+      '<div style="display:flex;align-items:center;gap:8px">'+
+        '<div class="av" style="width:28px;height:28px;background:var(--bg4);font-size:10px;color:var(--t3)">'+t.pubAvatar+'</div>'+
+        '<div><div style="font-size:11px;font-weight:700">'+t.publisher+'</div><div style="font-size:9px;color:var(--cy)">⭐ 信誉 '+t.pubRep+'</div></div>'+
+      '</div>'+
+      '<span style="font-size:10px;color:var(--t3)">⏰ '+t.deadline+'</span>'+
+    '</div>'+
+    '<button class="bt bps bf" style="padding:14px;font-size:14px" onclick="applyTask()">🚀 申请任务</button>'+
+    '<div style="text-align:center;margin-top:8px;font-size:9px;color:var(--t3)">已有 12 人申请 · 剩余 3 个名额</div>';
+  showModal('taskDetailModal');
+}
+function applyTask(){
+  document.getElementById('taskDetailBody').innerHTML=
+    '<div style="text-align:center;padding:40px 20px">'+
+      '<div style="font-size:48px;margin-bottom:12px">✅</div>'+
+      '<div style="font-size:18px;font-weight:900;margin-bottom:6px">申请已提交</div>'+
+      '<div style="font-size:12px;color:var(--t2);line-height:1.6">任务发布方将在24小时内审核您的申请。届时将通过链上消息通知您。</div>'+
+      '<button class="bt bp bf" style="margin-top:20px" onclick="closeModal(\'taskDetailModal\')">返回任务列表</button>'+
+    '</div>';
+}
+
+// ===== Create Task Modal =====
+function openCreateTask(){showModal('createTaskModal')}
+
+// ===== Modal Helpers =====
+function showModal(id){document.getElementById(id).classList.add('show')}
+function closeModal(id){document.getElementById(id).classList.remove('show')}
+
+// Close modal on overlay click
+document.querySelectorAll('.modal-overlay').forEach(function(overlay){
+  overlay.addEventListener('click',function(e){
+    if(e.target===overlay)overlay.classList.remove('show');
+  });
+});
 </script>
 </body>
 </html>
