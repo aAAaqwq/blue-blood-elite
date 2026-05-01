@@ -1,7 +1,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { canTransitionBountyStatus, type BountyStatus } from "@/domains/bounties/status-machine";
 
-export type BountyCard = {
+type BountyCard = {
   id: string;
   title: string;
   description: string;
@@ -14,7 +14,7 @@ export type BountyCard = {
   techTags: string[] | null;
 };
 
-export type BountyDetail = BountyCard & {
+type BountyDetail = BountyCard & {
   publisherId: string;
   techTags: string[] | null;
   deliveryStandard: string | null;

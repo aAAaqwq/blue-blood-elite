@@ -1,6 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 
-export type ApplicationWithApplicant = {
+type ApplicationWithApplicant = {
   id: string;
   bountyId: string;
   applicantId: string;

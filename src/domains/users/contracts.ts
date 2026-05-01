@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const loginMethodValues = ["email", "phone"] as const;
+const loginMethodValues = ["email", "phone"] as const;
 export const verifyTypeValues = [
   "github_500stars",
   "company_proof",
@@ -28,6 +28,6 @@ export const verifyApplicationInputSchema = z.object({
   evidenceUrl: z.string().url(),
 });
 
-export type RegistrationInput = z.infer<typeof registrationInputSchema>;
+type RegistrationInput = z.infer<typeof registrationInputSchema>;
 export type ProfileUpdateInput = z.infer<typeof profileUpdateInputSchema>;
 export type VerifyApplicationInput = z.infer<typeof verifyApplicationInputSchema>;

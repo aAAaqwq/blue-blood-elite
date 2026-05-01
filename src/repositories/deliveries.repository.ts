@@ -1,6 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 
-export type Delivery = {
+type Delivery = {
   id: string;
   bountyId: string;
   content: string;
@@ -55,7 +55,7 @@ export async function getDeliveryByBountyId(
 /**
  * 检查任务是否已有交付
  */
-export async function hasDelivery(
+async function hasDelivery(
   supabase: SupabaseClient,
   bountyId: string,
 ): Promise<boolean> {

@@ -33,9 +33,9 @@ export interface Task {
   claimed_by_user?: TaskPublisher | null;
 }
 
-export type TaskStatus = "open" | "in_progress" | "completed" | "cancelled";
+type TaskStatus = "open" | "in_progress" | "completed" | "cancelled";
 
-export interface TaskPublisher {
+interface TaskPublisher {
   /** 用户昵称 */
   nickname: string;
   /** 用户头像 */
@@ -77,7 +77,7 @@ export interface PaginationParams {
 /**
  * 分页响应
  */
-export interface PaginatedResponse<T> {
+interface PaginatedResponse<T> {
   /** 数据列表 */
   data: T[];
   /** 总数 */
@@ -103,7 +103,7 @@ export interface ApplyResult {
 /**
  * 任务申请信息
  */
-export interface TaskApplication {
+interface TaskApplication {
   /** 申请ID */
   id: string;
   /** 任务ID */
@@ -122,7 +122,7 @@ export interface TaskApplication {
   applicant?: TaskPublisher;
 }
 
-export type ApplicationStatus =
+type ApplicationStatus =
   | "pending"
   | "accepted"
   | "rejected"

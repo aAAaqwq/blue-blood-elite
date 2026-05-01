@@ -14,7 +14,7 @@ export type MessageWithUser = {
   };
 };
 
-export type Conversation = {
+type Conversation = {
   otherUser: {
     id: string;
     nickname: string;

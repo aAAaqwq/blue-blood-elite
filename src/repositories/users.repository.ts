@@ -101,7 +101,7 @@ export async function submitVerifyApplication(
   }
 }
 
-export interface VerifyApplicationRecord {
+interface VerifyApplicationRecord {
   id: string;
   verify_type: string;
   evidence_url: string;
@@ -112,7 +112,7 @@ export interface VerifyApplicationRecord {
   reviewed_at: string | null;
 }
 
-export interface UserVerifyStatus {
+interface UserVerifyStatus {
   isVerified: boolean;
   verifiedAt: string | null;
   applications: VerifyApplicationRecord[];
@@ -151,7 +151,7 @@ export async function getUserVerifyStatus(
   };
 }
 
-export type CompletedBounty = {
+type CompletedBounty = {
   id: string;
   title: string;
   rewardUsdc: string;

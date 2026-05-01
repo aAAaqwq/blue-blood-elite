@@ -11,13 +11,13 @@ export interface PhoneAuthCredentials {
   otp?: string;
 }
 
-export interface AuthResult {
+interface AuthResult {
   user: User | null;
   error: string | null;
   requiresOtp?: boolean;
 }
 
-export interface SignOutResult {
+interface SignOutResult {
   success: boolean;
   error?: string;
 }

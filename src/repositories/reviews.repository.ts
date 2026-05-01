@@ -1,6 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 
-export type Review = {
+type Review = {
   id: string;
   bountyId: string;
   reviewerId: string;

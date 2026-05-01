@@ -20,7 +20,7 @@ export const BOUNTY_STATUS = {
 
 export type BountyStatus = (typeof bountyStatusValues)[number];
 
-export const bountyStatusSchema = z.enum(bountyStatusValues);
+const bountyStatusSchema = z.enum(bountyStatusValues);
 
 const allowedTransitions: Record<BountyStatus, readonly BountyStatus[]> = {
   open: ["in_progress", "cancelled"],

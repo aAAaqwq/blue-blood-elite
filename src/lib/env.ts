@@ -13,7 +13,7 @@ const clientEnvSchema = z.object({
   VITE_SUPABASE_ANON_KEY: z.string().min(1),
 });
 
-export type ClientEnv = z.infer<typeof clientEnvSchema>;
+type ClientEnv = z.infer<typeof clientEnvSchema>;
 
 export function validateClientEnv(input: Record<string, string | undefined>): ClientEnv {
   return clientEnvSchema.parse(input);

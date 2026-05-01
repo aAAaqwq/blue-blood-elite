@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { Search, X } from 'lucide-react';
 
-export interface SearchBarProps {
+interface SearchBarProps {
   onSearch: (query: string) => void;
   debounceMs?: number;
   isLoading?: boolean;

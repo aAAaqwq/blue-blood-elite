@@ -22,7 +22,7 @@ export interface SearchResult {
   description: string;
 }
 
-export interface DiscoverFilters {
+interface DiscoverFilters {
   category?: string;
   search?: string;
 }
